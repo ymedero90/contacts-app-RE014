@@ -29,6 +29,12 @@
 	<key>UIMainStoryboardFile</key>
 	<string>Main</string>
 	<key>UISupportedInterfaceOrientations</key>
+	<key>NSCameraUsageDescription</key>
+	<string>ContactApp requires access to your camera so you can take photos directly from the app.</string>
+	<key>NSPhotoLibraryAddUsageDescription</key>
+	<string>ContactApp requests permission to add photos to your library. This allows you to save images or content generated in the app directly to your device.</string>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>ContactApp requests access to your photo library so you can select images to use within the app. Your photos will not be shared without your explicit consent.</string>
 	<array>
 		<string>UIInterfaceOrientationPortrait</string>
 		<string>UIInterfaceOrientationLandscapeLeft</string>
