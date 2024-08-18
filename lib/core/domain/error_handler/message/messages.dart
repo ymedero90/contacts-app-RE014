@@ -28,6 +28,25 @@ class WrongCredentials extends Equatable implements IMessage {
   get data => throw UnimplementedError();
 }
 
+class ResourceNotFound extends Equatable implements IMessage {
+  const ResourceNotFound();
+
+  @override
+  MessageType get type => MessageType.ERROR;
+
+  @override
+  String get body => 'Resource not found';
+
+  @override
+  String get title => 'Resource not found';
+
+  @override
+  List<Object> get props => [title, body, type];
+
+  @override
+  get data => throw UnimplementedError();
+}
+
 class GenericFails implements IMessage {
   @override
   MessageType get type => MessageType.ERROR;

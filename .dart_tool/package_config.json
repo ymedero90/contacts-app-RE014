@@ -128,42 +128,6 @@
       "languageVersion": "3.4"
     },
     {
-      "name": "flutter_secure_storage",
-      "rootUri": "file:///Users/yoelmedero/.pub-cache/hosted/pub.dev/flutter_secure_storage-9.2.2",
-      "packageUri": "lib/",
-      "languageVersion": "2.12"
-    },
-    {
-      "name": "flutter_secure_storage_linux",
-      "rootUri": "file:///Users/yoelmedero/.pub-cache/hosted/pub.dev/flutter_secure_storage_linux-1.2.1",
-      "packageUri": "lib/",
-      "languageVersion": "2.12"
-    },
-    {
-      "name": "flutter_secure_storage_macos",
-      "rootUri": "file:///Users/yoelmedero/.pub-cache/hosted/pub.dev/flutter_secure_storage_macos-3.1.2",
-      "packageUri": "lib/",
-      "languageVersion": "2.12"
-    },
-    {
-      "name": "flutter_secure_storage_platform_interface",
-      "rootUri": "file:///Users/yoelmedero/.pub-cache/hosted/pub.dev/flutter_secure_storage_platform_interface-1.1.2",
-      "packageUri": "lib/",
-      "languageVersion": "2.12"
-    },
-    {
-      "name": "flutter_secure_storage_web",
-      "rootUri": "file:///Users/yoelmedero/.pub-cache/hosted/pub.dev/flutter_secure_storage_web-1.2.1",
-      "packageUri": "lib/",
-      "languageVersion": "2.12"
-    },
-    {
-      "name": "flutter_secure_storage_windows",
-      "rootUri": "file:///Users/yoelmedero/.pub-cache/hosted/pub.dev/flutter_secure_storage_windows-3.1.2",
-      "packageUri": "lib/",
-      "languageVersion": "2.12"
-    },
-    {
       "name": "flutter_test",
       "rootUri": "file:///Users/yoelmedero/fvm/versions/stable/packages/flutter_test",
       "packageUri": "lib/",
@@ -244,12 +208,6 @@
     {
       "name": "image_picker_windows",
       "rootUri": "file:///Users/yoelmedero/.pub-cache/hosted/pub.dev/image_picker_windows-0.2.1+1",
-      "packageUri": "lib/",
-      "languageVersion": "2.19"
-    },
-    {
-      "name": "js",
-      "rootUri": "file:///Users/yoelmedero/.pub-cache/hosted/pub.dev/js-0.6.7",
       "packageUri": "lib/",
       "languageVersion": "2.19"
     },
@@ -482,12 +440,6 @@
       "languageVersion": "3.4"
     },
     {
-      "name": "win32",
-      "rootUri": "file:///Users/yoelmedero/.pub-cache/hosted/pub.dev/win32-5.5.4",
-      "packageUri": "lib/",
-      "languageVersion": "3.4"
-    },
-    {
       "name": "xdg_directories",
       "rootUri": "file:///Users/yoelmedero/.pub-cache/hosted/pub.dev/xdg_directories-1.0.4",
       "packageUri": "lib/",
@@ -500,7 +452,7 @@
       "languageVersion": "3.5"
     }
   ],
-  "generated": "2024-08-17T20:12:37.135632Z",
+  "generated": "2024-08-18T14:02:29.110526Z",
   "generator": "pub",
   "generatorVersion": "3.5.0",
   "flutterRoot": "file:///Users/yoelmedero/fvm/versions/stable",

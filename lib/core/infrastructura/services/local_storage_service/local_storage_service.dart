@@ -5,12 +5,14 @@ import 'package:hive/hive.dart';
 import 'package:path_provider/path_provider.dart';
 
 class LocalStorageService {
+  late Box appBox;
   late Box userBox;
   late Box contactBox;
 
   Future<void> _openBox() async {
-    userBox = await Hive.openBox(CacheBoxes.UsersBox);
-    contactBox = await Hive.openBox(CacheBoxes.ContactsBox);
+    appBox = await Hive.openBox(LocalBoxes.AppBox);
+    userBox = await Hive.openBox(LocalBoxes.UsersBox);
+    contactBox = await Hive.openBox(LocalBoxes.ContactsBox);
   }
 
   Future<LocalStorageService> init() async {
@@ -22,9 +24,11 @@ class LocalStorageService {
 
   Box? _getBox(String boxName) {
     switch (boxName) {
-      case CacheBoxes.UsersBox:
+      case LocalBoxes.AppBox:
+        return appBox;
+      case LocalBoxes.UsersBox:
         return userBox;
-      case CacheBoxes.ContactsBox:
+      case LocalBoxes.ContactsBox:
         return contactBox;
       default:
         return null;
@@ -97,7 +101,7 @@ class LocalStorageService {
   }
 
   FutureOr onClose() async {
-    for (var item in CacheBoxes.AllBoxes) {
+    for (var item in LocalBoxes.AllBoxes) {
       if (Hive.isBoxOpen(item)) {
         await Hive.box(item).compact();
       }
