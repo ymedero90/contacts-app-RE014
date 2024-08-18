@@ -7,10 +7,10 @@ import 'package:contacts_app_re014/features/contacts/domain/repositories/contact
 import 'package:contacts_app_re014/features/contacts/infrastructure/dtos/contact_dto.dart';
 import 'package:dartz/dartz.dart';
 
-class ContactRepository with ErrorHandling<Failure> implements IContactsRepository {
+class ContactsRepository with ErrorHandling<Failure> implements IContactsRepository {
   final IContactsLocalDataSource local;
 
-  ContactRepository({required this.local});
+  ContactsRepository({required this.local});
 
   @override
   Future<Either<Failure, void>> addContact({required ContactEntity contact}) {
