@@ -34,10 +34,10 @@ class AuthRepository with ErrorHandling<Failure> implements IAuthRepository {
   }
 
   @override
-  Future<Either<Failure, String>> existSession() {
+  Future<Either<Failure, String>> getSession() {
     return process<String>(
       action: () async {
-        final response = await local.existSession();
+        final response = await local.getSession();
         return response;
       },
       onFail: (message) => FailWithMessage(message: message),

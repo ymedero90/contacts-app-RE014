@@ -5,5 +5,6 @@ import 'package:dartz/dartz.dart';
 abstract class IUserRepository {
   Future<Either<Failure, List<UserEntity>>> getUsers();
   Future<Either<Failure, UserEntity>> getUser({required String email});
+  Future<Either<Failure, void>> deleteUser({required String email});
   Future<Either<Failure, void>> addUser({required UserEntity user});
 }

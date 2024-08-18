@@ -39,4 +39,12 @@ class UserLocalDataSource implements IUserLocalDataSource {
     final response = decoded.map((e) => UserDto.fromJson(e)).toList();
     return response;
   }
+
+  @override
+  Future<void> deleteUser({required String email}) async {
+    await localStorageService.delete(
+      email,
+      LocalBoxes.UsersBox,
+    );
+  }
 }

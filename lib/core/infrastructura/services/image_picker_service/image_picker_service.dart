@@ -1,15 +1,20 @@
 import 'dart:io';
 
 import 'package:image_picker/image_picker.dart';
+import 'package:path_provider/path_provider.dart';
 
 class ImagePickerService {
   final ImagePicker _picker = ImagePicker();
 
   Future<File?> pickImageFromGallery() async {
     try {
+      Directory? appTmp = await getTemporaryDirectory();
       final XFile? pickedFile = await _picker.pickImage(source: ImageSource.gallery);
       if (pickedFile != null) {
-        return File(pickedFile.path);
+        final bytes = await pickedFile.readAsBytes();
+        final file = File(appTmp.path + pickedFile.path);
+        await file.writeAsBytes(bytes);
+        return file;
       }
     } catch (e) {
       print("Error picking image from gallery: $e");
@@ -19,9 +24,13 @@ class ImagePickerService {
 
   Future<File?> captureImageWithCamera() async {
     try {
+      Directory? appTmp = await getTemporaryDirectory();
       final XFile? pickedFile = await _picker.pickImage(source: ImageSource.camera);
       if (pickedFile != null) {
-        return File(pickedFile.path);
+        final bytes = await pickedFile.readAsBytes();
+        final file = File(appTmp.path + pickedFile.path);
+        await file.writeAsBytes(bytes);
+        return file;
       }
     } catch (e) {
       print("Error capturing image with camera: $e");

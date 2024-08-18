@@ -7,5 +7,5 @@ abstract class IAuthRepository {
     required String password,
   });
   Future<Either<Failure, void>> logout({required String email});
-  Future<Either<Failure, String>> existSession();
+  Future<Either<Failure, String>> getSession();
 }

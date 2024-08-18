@@ -19,7 +19,7 @@ class AuthLocalDataSource implements IAuthLocalDataSource {
   }
 
   @override
-  Future<String> existSession() async {
+  Future<String> getSession() async {
     final response = await localStorageService.get(BoxKeys.SessionKey, LocalBoxes.AppBox);
     if (response != null) {
       return response;

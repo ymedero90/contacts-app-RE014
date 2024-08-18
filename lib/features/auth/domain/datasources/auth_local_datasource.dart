@@ -1,5 +1,5 @@
 abstract class IAuthLocalDataSource {
   Future<void> login({required String email});
-  Future<String> existSession();
+  Future<String> getSession();
   Future<void> logout();
 }

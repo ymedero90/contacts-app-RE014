@@ -45,4 +45,14 @@ class UserRepository with ErrorHandling<Failure> implements IUserRepository {
       onFail: (message) => FailWithMessage(message: message),
     );
   }
+
+  @override
+  Future<Either<Failure, void>> deleteUser({required String email}) {
+    return process<void>(
+      action: () async {
+        await local.deleteUser(email: email);
+      },
+      onFail: (message) => FailWithMessage(message: message),
+    );
+  }
 }

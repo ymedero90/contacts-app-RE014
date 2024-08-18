@@ -4,4 +4,5 @@ abstract class IUserLocalDataSource {
   Future<UserDto> getUser({required String email});
   Future<List<UserDto>> getUsers();
   Future<void> addUser({required UserDto user});
+  Future<void> deleteUser({required String email});
 }
