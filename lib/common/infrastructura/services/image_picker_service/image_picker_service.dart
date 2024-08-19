@@ -12,7 +12,7 @@ class ImagePickerService {
       final XFile? pickedFile = await _picker.pickImage(source: ImageSource.gallery);
       if (pickedFile != null) {
         final bytes = await pickedFile.readAsBytes();
-        final file = File(appTmp.path + pickedFile.path);
+        final file = File(pickedFile.path);
         await file.writeAsBytes(bytes);
         return file;
       }
@@ -28,7 +28,7 @@ class ImagePickerService {
       final XFile? pickedFile = await _picker.pickImage(source: ImageSource.camera);
       if (pickedFile != null) {
         final bytes = await pickedFile.readAsBytes();
-        final file = File(appTmp.path + pickedFile.path);
+        final file = File(pickedFile.path);
         await file.writeAsBytes(bytes);
         return file;
       }

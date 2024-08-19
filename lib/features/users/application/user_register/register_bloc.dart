@@ -1,8 +1,9 @@
 import 'package:bloc/bloc.dart';
-import 'package:contacts_app_re014/features/users/domain/core/register_status.dart';
+import 'package:contacts_app_re014/features/users/domain/core/user_register_status.dart';
 import 'package:contacts_app_re014/features/users/domain/index.dart';
 import 'package:contacts_app_re014/features/users/domain/repositories/user_repository.dart';
 import 'package:equatable/equatable.dart';
+import 'package:flutter/material.dart';
 
 part 'register_event.dart';
 part 'register_state.dart';
@@ -23,6 +24,7 @@ class RegisterUserFormBloc extends Bloc<RegisterUserFormEvent, RegisterUserFormS
   ) async {
     emit(state.copyWith(status: RegisterUserStatus.submitting));
     final respUser = await _userRepository.getUser(email: event.email);
+    await Future.delayed(Durations.extralong4);
     await respUser.fold(
       (l) async {
         final resp = await _userRepository.addUser(

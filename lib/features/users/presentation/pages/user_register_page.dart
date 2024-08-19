@@ -1,7 +1,6 @@
 import 'package:contacts_app_re014/common/index.dart';
-import 'package:contacts_app_re014/features/auth/domain/core/auth_status.dart';
 import 'package:contacts_app_re014/features/users/application/user_register/register_bloc.dart';
-import 'package:contacts_app_re014/features/users/domain/core/register_status.dart';
+import 'package:contacts_app_re014/features/users/domain/core/user_register_status.dart';
 import 'package:contacts_app_re014/features/users/presentation/widgets/index.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -122,7 +121,7 @@ class _UserRegisterPageState extends State<UserRegisterPage> {
                               ),
                               CustomButton(
                                 text: 'Save',
-                                suffixIcon: state.status == AuthStatus.submitting
+                                suffixIcon: state.status == RegisterUserStatus.submitting
                                     ? SizedBox(
                                         height: size.height * .033,
                                         width: size.height * .033,
@@ -134,7 +133,7 @@ class _UserRegisterPageState extends State<UserRegisterPage> {
                                         size: 28,
                                       ),
                                 margin: EdgeInsets.only(top: size.height * .04, bottom: size.height * .01),
-                                onPressed: () => state.status != AuthStatus.submitting ? onSubmit() : {},
+                                onPressed: () => state.status != RegisterUserStatus.submitting ? onSubmit() : {},
                               ),
                             ],
                           ),

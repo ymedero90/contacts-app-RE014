@@ -35,18 +35,19 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     emit(const AuthState.submitting());
     final respGetUser = await _userRepository.getUser(email: event.email);
     await Future.delayed(Durations.extralong4);
-    respGetUser.fold((l) {
+    await respGetUser.fold((l) {
       emit(const AuthState.unauthenticated());
     }, (user) async {
       if (user.password != event.password) {
         emit(const AuthState.unauthenticated());
+      } else {
+        final resp = await _authRepository.login(email: event.email, password: event.password);
+        resp.fold((l) {
+          emit(const AuthState.unauthenticated());
+        }, (r) {
+          emit(AuthState.authenticated(user));
+        });
       }
-      final resp = await _authRepository.login(email: event.email, password: event.password);
-      resp.fold((l) {
-        emit(const AuthState.unauthenticated());
-      }, (r) {
-        emit(AuthState.authenticated(user));
-      });
     });
   }
 
@@ -56,7 +57,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
   ) async {
     final userLoggedResp = await _authRepository.getSession();
     await Future.delayed(Durations.extralong4);
-    userLoggedResp.fold((l) {
+    await userLoggedResp.fold((l) {
       emit(const AuthState.userSessionChecked());
     }, (email) async {
       final userResp = await _userRepository.getUser(email: email);

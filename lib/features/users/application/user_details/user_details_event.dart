@@ -16,3 +16,9 @@ final class OnChangeUserAvatarEvent extends UserDetailsEvent {
 
   const OnChangeUserAvatarEvent({required this.source});
 }
+
+final class OnLogoutEvent extends UserDetailsEvent {
+  final String userEmail;
+
+  const OnLogoutEvent({required this.userEmail});
+}

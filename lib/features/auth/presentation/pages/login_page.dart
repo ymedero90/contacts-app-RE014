@@ -17,7 +17,7 @@ class LoginPage extends StatefulWidget {
 class _LoginPageState extends State<LoginPage> {
   GlobalKey<FormState> formKey = GlobalKey<FormState>();
   TextEditingController emailController = TextEditingController(text: 'ymedero90@gmail.com');
-  TextEditingController passController = TextEditingController(text: 'qwerty123');
+  TextEditingController passController = TextEditingController(text: 'Qwerty12345@');
 
   @override
   Widget build(BuildContext context) {
@@ -35,6 +35,12 @@ class _LoginPageState extends State<LoginPage> {
                   ),
                 );
                 break;
+              case AuthStatus.authenticated:
+                context.goNamed(Routes.userDetails.name);
+                break;
+              case AuthStatus.autoLogin:
+                context.goNamed(Routes.userDetails.name);
+                break;
               default:
             }
           },
@@ -44,6 +50,8 @@ class _LoginPageState extends State<LoginPage> {
                 return const Center(
                   child: CircularProgressIndicator(),
                 );
+              case AuthStatus.autoLogin:
+                return Container();
 
               default:
                 return GestureDetector(
@@ -103,17 +111,11 @@ class _LoginPageState extends State<LoginPage> {
                                     CustomButton(
                                       text: 'Sign Up',
                                       color: Colors.blueGrey,
-                                      suffixIcon: state.status == AuthStatus.submitting
-                                          ? SizedBox(
-                                              height: size.height * .033,
-                                              width: size.height * .033,
-                                              child: const CircularProgressIndicator(color: Colors.white),
-                                            )
-                                          : const Icon(
-                                              Icons.chevron_right_rounded,
-                                              color: Colors.white,
-                                              size: 28,
-                                            ),
+                                      suffixIcon: const Icon(
+                                        Icons.chevron_right_rounded,
+                                        color: Colors.white,
+                                        size: 28,
+                                      ),
                                       margin: EdgeInsets.only(top: size.height * .01),
                                       onPressed: () => context.pushNamed(Routes.userRegister.name),
                                     ),

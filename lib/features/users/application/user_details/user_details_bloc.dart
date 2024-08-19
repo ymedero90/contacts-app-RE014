@@ -21,6 +21,8 @@ class UserDetailsBloc extends Bloc<UserDetailsEvent, UserDetailsState> {
         super(const UserDetailsState.initail()) {
     on<OnGetUserEvent>(_onGetUser);
     on<OnChangeUserAvatarEvent>(_onChangeUserAvatarEvent);
+    on<OnLogoutEvent>(_onLogoutEvent);
+    add(OnGetUserEvent());
   }
 
   final IAuthRepository _authRepository;
@@ -32,12 +34,12 @@ class UserDetailsBloc extends Bloc<UserDetailsEvent, UserDetailsState> {
     Emitter<UserDetailsState> emit,
   ) async {
     final respSession = await _authRepository.getSession();
-    respSession.fold((l) {
+    await respSession.fold((l) {
       emit(UserDetailsState.fail(l.message.body));
     }, (email) async {
       final respUser = await _userRepository.getUser(email: email);
-      respUser.fold((l) {}, (r) {
-        emit(UserDetailsState.fetched(state.user!));
+      respUser.fold((l) {}, (user) {
+        emit(UserDetailsState.fetched(user));
       });
     });
   }
@@ -52,11 +54,23 @@ class UserDetailsBloc extends Bloc<UserDetailsEvent, UserDetailsState> {
     } else {
       image = await _imagePickerService.pickImageFromGallery();
     }
-    final resp = await _userRepository.addUser(user: state.user!);
+    final resp = await _userRepository.addUser(user: state.user!.copyWith(avatar: image?.path));
     resp.fold((l) {
       emit(UserDetailsState.fail(l.message.body));
     }, (r) {
       emit(UserDetailsState.avatarChanged(state.user!.copyWith(avatar: image!.path)));
+    });
+  }
+
+  Future<void> _onLogoutEvent(
+    OnLogoutEvent event,
+    Emitter<UserDetailsState> emit,
+  ) async {
+    final resp = await _authRepository.logout(email: event.userEmail);
+    resp.fold((l) {
+      emit(UserDetailsState.fail(l.message.body));
+    }, (r) {
+      emit(const UserDetailsState.logout());
     });
   }
 }
