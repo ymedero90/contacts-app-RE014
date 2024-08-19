@@ -1,8 +1,8 @@
 import 'dart:convert';
 
-import 'package:contacts_app_re014/core/domain/error_handler/message/messages.dart';
-import 'package:contacts_app_re014/core/infrastructura/services/local_storage_service/constants.dart';
-import 'package:contacts_app_re014/core/infrastructura/services/local_storage_service/local_storage_service.dart';
+import 'package:contacts_app_re014/common/domain/error_handler/message/messages.dart';
+import 'package:contacts_app_re014/common/infrastructura/services/local_storage_service/constants.dart';
+import 'package:contacts_app_re014/common/infrastructura/services/local_storage_service/local_storage_service.dart';
 import 'package:contacts_app_re014/features/contacts/domain/datasources/contacts_local_datasource.dart';
 import 'package:contacts_app_re014/features/contacts/infrastructure/dtos/contact_dto.dart';
 

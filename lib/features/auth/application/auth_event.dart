@@ -16,3 +16,7 @@ final class AuthLogout extends AuthEvent {
 
   AuthLogout({required this.email});
 }
+
+final class AuthInitialEvent extends AuthEvent {
+  AuthInitialEvent();
+}

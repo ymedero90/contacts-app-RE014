@@ -1,1 +1,9 @@
-enum AuthStatus { unknown, authenticated, unauthenticated }
+enum AuthStatus {
+  unknown,
+  checkingUserSession,
+  authenticated,
+  unauthenticated,
+  checkedUserSession,
+  autoLogin,
+  submitting,
+}

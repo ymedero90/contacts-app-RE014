@@ -1,7 +1,7 @@
 import 'dart:io';
 
 import 'package:bloc/bloc.dart';
-import 'package:contacts_app_re014/core/index.dart';
+import 'package:contacts_app_re014/common/index.dart';
 import 'package:contacts_app_re014/features/auth/domain/repositories/auth_repository.dart';
 import 'package:contacts_app_re014/features/users/domain/index.dart';
 import 'package:contacts_app_re014/features/users/domain/repositories/user_repository.dart';

@@ -1,5 +1,5 @@
 import 'package:bloc/bloc.dart';
-import 'package:contacts_app_re014/core/domain/validators.dart';
+import 'package:contacts_app_re014/common/domain/validators.dart';
 import 'package:contacts_app_re014/features/auth/domain/repositories/auth_repository.dart';
 import 'package:contacts_app_re014/features/users/domain/core/register_status.dart';
 import 'package:contacts_app_re014/features/users/domain/index.dart';
@@ -40,33 +40,33 @@ class RegisterUserFormBloc extends Bloc<RegisterUserFormEvent, RegisterUserFormS
   }
 
   void _onEmailChanged(EmailChanged event, Emitter<RegisterUserFormState> emit) {
-    final isValid = AppValidators.emailValidator(event.email);
+    final emailError = AppValidators.emailValidator(event.email);
     emit(
       state.copyWith(
         email: event.email,
-        isValid: isValid,
+        isValid: emailError == null,
         status: RegisterUserStatus.inProgress,
       ),
     );
   }
 
   void _onPasswordChanged(PasswordChanged event, Emitter<RegisterUserFormState> emit) {
-    final isValid = AppValidators.passwordValidator(event.password);
+    final passwordError = AppValidators.passwordValidator(event.password);
     emit(
       state.copyWith(
         email: event.password,
-        isValid: isValid,
+        isValid: passwordError == null,
         status: RegisterUserStatus.inProgress,
       ),
     );
   }
 
   void _onEmailUnfocused(EmailUnfocused event, Emitter<RegisterUserFormState> emit) {
-    final isValid = AppValidators.emailValidator(state.email);
+    final emailError = AppValidators.emailValidator(state.email);
     emit(
       state.copyWith(
         email: state.email,
-        isValid: isValid,
+        isValid: emailError == null,
         status: RegisterUserStatus.inProgress,
       ),
     );
@@ -76,11 +76,11 @@ class RegisterUserFormBloc extends Bloc<RegisterUserFormEvent, RegisterUserFormS
     PasswordUnfocused event,
     Emitter<RegisterUserFormState> emit,
   ) {
-    final isValid = AppValidators.passwordValidator(state.password);
+    final passwordError = AppValidators.passwordValidator(state.password);
     emit(
       state.copyWith(
         email: state.password,
-        isValid: isValid,
+        isValid: passwordError == null,
         status: RegisterUserStatus.inProgress,
       ),
     );
@@ -104,9 +104,9 @@ class RegisterUserFormBloc extends Bloc<RegisterUserFormEvent, RegisterUserFormS
     FormSubmitted event,
     Emitter<RegisterUserFormState> emit,
   ) async {
-    final emailOk = AppValidators.emailValidator(state.email);
-    final passwordOk = AppValidators.passwordValidator(state.password);
-    final isValid = emailOk && passwordOk;
+    final emailError = AppValidators.emailValidator(state.email);
+    final passwordError = AppValidators.passwordValidator(state.password);
+    final isValid = emailError == null && passwordError == null;
     emit(
       state.copyWith(
         email: state.email,

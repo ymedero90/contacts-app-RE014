@@ -1,0 +1,1 @@
+ /Users/yoelmedero/WORK/contacts-app-RE014/.dart_tool/flutter_build/8b78204e4499f5ba094a970c3561bc6d/native_assets.yaml: 

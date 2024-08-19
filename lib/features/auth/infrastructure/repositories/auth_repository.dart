@@ -1,6 +1,6 @@
-import 'package:contacts_app_re014/core/domain/error_handler/error_handling.dart';
-import 'package:contacts_app_re014/core/domain/error_handler/failures/fail_with_message.dart';
-import 'package:contacts_app_re014/core/domain/error_handler/failures/failures.dart';
+import 'package:contacts_app_re014/common/domain/error_handler/error_handling.dart';
+import 'package:contacts_app_re014/common/domain/error_handler/failures/fail_with_message.dart';
+import 'package:contacts_app_re014/common/domain/error_handler/failures/failures.dart';
 import 'package:contacts_app_re014/features/auth/domain/datasources/auth_local_datasource.dart';
 import 'package:contacts_app_re014/features/auth/domain/repositories/auth_repository.dart';
 import 'package:dartz/dartz.dart';

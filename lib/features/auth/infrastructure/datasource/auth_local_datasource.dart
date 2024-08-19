@@ -1,6 +1,6 @@
-import 'package:contacts_app_re014/core/index.dart';
-import 'package:contacts_app_re014/core/infrastructura/services/local_storage_service/constants.dart';
-import 'package:contacts_app_re014/core/infrastructura/services/local_storage_service/local_storage_service.dart';
+import 'package:contacts_app_re014/common/index.dart';
+import 'package:contacts_app_re014/common/infrastructura/services/local_storage_service/constants.dart';
+import 'package:contacts_app_re014/common/infrastructura/services/local_storage_service/local_storage_service.dart';
 import 'package:contacts_app_re014/features/auth/domain/datasources/auth_local_datasource.dart';
 
 class AuthLocalDataSource implements IAuthLocalDataSource {

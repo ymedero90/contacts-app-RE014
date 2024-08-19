@@ -1,4 +1,4 @@
-import 'package:contacts_app_re014/core/domain/error_handler/failures/failures.dart';
+import 'package:contacts_app_re014/common/domain/error_handler/failures/failures.dart';
 import 'package:contacts_app_re014/features/contacts/domain/entities/contact_entity.dart';
 import 'package:dartz/dartz.dart';
 

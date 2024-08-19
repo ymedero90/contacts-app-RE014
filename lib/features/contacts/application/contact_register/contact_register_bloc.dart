@@ -1,5 +1,5 @@
 import 'package:bloc/bloc.dart';
-import 'package:contacts_app_re014/core/domain/validators.dart';
+import 'package:contacts_app_re014/common/domain/validators.dart';
 import 'package:contacts_app_re014/features/auth/domain/repositories/auth_repository.dart';
 import 'package:contacts_app_re014/features/contacts/domain/core/register_status.dart';
 import 'package:contacts_app_re014/features/contacts/domain/entities/contact_entity.dart';
@@ -47,9 +47,9 @@ class RegisterUserFormBloc extends Bloc<RegisterContactFormEvent, RegisterContac
   }
 
   Future<void> _onFormSubmitted(FormSubmitted event, Emitter<RegisterContactFormState> emit) async {
-    final idOk = AppValidators.emailValidator(state.id);
-    final nameOk = AppValidators.passwordValidator(state.name);
-    final isValid = idOk && nameOk;
+    final idError = AppValidators.emailValidator(state.id);
+    final passwordError = AppValidators.passwordValidator(state.name);
+    final isValid = idError == null && passwordError == null;
     emit(
       state.copyWith(
         id: state.id,
