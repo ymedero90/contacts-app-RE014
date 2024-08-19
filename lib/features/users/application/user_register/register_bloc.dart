@@ -1,6 +1,4 @@
 import 'package:bloc/bloc.dart';
-import 'package:contacts_app_re014/common/domain/validators.dart';
-import 'package:contacts_app_re014/features/auth/domain/repositories/auth_repository.dart';
 import 'package:contacts_app_re014/features/users/domain/core/register_status.dart';
 import 'package:contacts_app_re014/features/users/domain/index.dart';
 import 'package:contacts_app_re014/features/users/domain/repositories/user_repository.dart';
@@ -11,150 +9,38 @@ part 'register_state.dart';
 
 class RegisterUserFormBloc extends Bloc<RegisterUserFormEvent, RegisterUserFormState> {
   RegisterUserFormBloc({
-    required IAuthRepository authRepository,
     required IUserRepository userRepository,
-  })  : _authRepository = authRepository,
-        _userRepository = userRepository,
+  })  : _userRepository = userRepository,
         super(const RegisterUserFormState()) {
-    on<NameChanged>(_onNameChanged);
-    on<EmailChanged>(_onEmailChanged);
-    on<PasswordChanged>(_onPasswordChanged);
-    on<EmailUnfocused>(_onEmailUnfocused);
-    on<PasswordUnfocused>(_onPasswordUnfocused);
-    on<ConfirmPasswordUnfocused>(_onConfirmPasswordUnfocused);
     on<FormSubmitted>(_onFormSubmitted);
   }
 
-  final IAuthRepository _authRepository;
   final IUserRepository _userRepository;
-
-  void _onNameChanged(NameChanged event, Emitter<RegisterUserFormState> emit) {
-    final isValid = AppValidators.nameValidator(event.name);
-    emit(
-      state.copyWith(
-        name: event.name,
-        isValid: isValid,
-        status: RegisterUserStatus.inProgress,
-      ),
-    );
-  }
-
-  void _onEmailChanged(EmailChanged event, Emitter<RegisterUserFormState> emit) {
-    final emailError = AppValidators.emailValidator(event.email);
-    emit(
-      state.copyWith(
-        email: event.email,
-        isValid: emailError == null,
-        status: RegisterUserStatus.inProgress,
-      ),
-    );
-  }
-
-  void _onPasswordChanged(PasswordChanged event, Emitter<RegisterUserFormState> emit) {
-    final passwordError = AppValidators.passwordValidator(event.password);
-    emit(
-      state.copyWith(
-        email: event.password,
-        isValid: passwordError == null,
-        status: RegisterUserStatus.inProgress,
-      ),
-    );
-  }
-
-  void _onEmailUnfocused(EmailUnfocused event, Emitter<RegisterUserFormState> emit) {
-    final emailError = AppValidators.emailValidator(state.email);
-    emit(
-      state.copyWith(
-        email: state.email,
-        isValid: emailError == null,
-        status: RegisterUserStatus.inProgress,
-      ),
-    );
-  }
-
-  void _onPasswordUnfocused(
-    PasswordUnfocused event,
-    Emitter<RegisterUserFormState> emit,
-  ) {
-    final passwordError = AppValidators.passwordValidator(state.password);
-    emit(
-      state.copyWith(
-        email: state.password,
-        isValid: passwordError == null,
-        status: RegisterUserStatus.inProgress,
-      ),
-    );
-  }
-
-  void _onConfirmPasswordUnfocused(
-    ConfirmPasswordUnfocused event,
-    Emitter<RegisterUserFormState> emit,
-  ) {
-    final isValid = event.password == state.password;
-    emit(
-      state.copyWith(
-        email: state.password,
-        isValid: isValid,
-        status: RegisterUserStatus.inProgress,
-      ),
-    );
-  }
 
   Future<void> _onFormSubmitted(
     FormSubmitted event,
     Emitter<RegisterUserFormState> emit,
   ) async {
-    final emailError = AppValidators.emailValidator(state.email);
-    final passwordError = AppValidators.passwordValidator(state.password);
-    final isValid = emailError == null && passwordError == null;
-    emit(
-      state.copyWith(
-        email: state.email,
-        password: state.password,
-        isValid: isValid,
-        status: isValid ? RegisterUserStatus.submitting : RegisterUserStatus.fail,
-      ),
-    );
-
-    final resp = await _userRepository.addUser(
-      user: UserEntity(
-        name: state.name,
-        email: state.email,
-        password: state.password,
-      ),
-    );
-
-    resp.fold((l) {
-      emit(
-        state.copyWith(
-          isValid: false,
-          status: RegisterUserStatus.fail,
-        ),
-      );
-    }, (r) async {
-      emit(
-        state.copyWith(
-          isValid: true,
-          status: RegisterUserStatus.success,
-        ),
-      );
-      final resp = await _authRepository.login(email: state.email, password: state.password);
-      resp.fold((l) async {
-        await _userRepository.deleteUser(email: state.email);
-        emit(
-          state.copyWith(
-            isValid: false,
-            status: RegisterUserStatus.fail,
+    emit(state.copyWith(status: RegisterUserStatus.submitting));
+    final respUser = await _userRepository.getUser(email: event.email);
+    await respUser.fold(
+      (l) async {
+        final resp = await _userRepository.addUser(
+          user: UserEntity(
+            name: event.name,
+            email: event.email,
+            password: event.password,
           ),
         );
-      }, (r) async {
-        emit(
-          state.copyWith(
-            isValid: true,
-            status: RegisterUserStatus.success,
-          ),
-        );
-      });
-    });
+        resp.fold((l) {
+          emit(state.copyWith(status: RegisterUserStatus.fail));
+        }, (r) async {
+          emit(state.copyWith(status: RegisterUserStatus.success));
+        });
+      },
+      (user) async {
+        emit(state.copyWith(status: RegisterUserStatus.emailAlreadyExist));
+      },
+    );
   }
 }

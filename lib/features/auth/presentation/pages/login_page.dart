@@ -1,9 +1,11 @@
+import 'package:contacts_app_re014/common/core/navigation/routes.dart';
 import 'package:contacts_app_re014/common/index.dart';
 import 'package:contacts_app_re014/features/auth/application/auth_bloc.dart';
 import 'package:contacts_app_re014/features/auth/domain/core/auth_status.dart';
 import 'package:contacts_app_re014/features/auth/presentation/widgets/login_header_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -113,7 +115,7 @@ class _LoginPageState extends State<LoginPage> {
                                               size: 28,
                                             ),
                                       margin: EdgeInsets.only(top: size.height * .01),
-                                      onPressed: () => state.status != AuthStatus.submitting ? onSubmit() : {},
+                                      onPressed: () => context.pushNamed(Routes.userRegister.name),
                                     ),
                                   ],
                                 ),

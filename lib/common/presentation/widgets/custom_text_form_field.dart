@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 class CustomTextFormField extends StatefulWidget {
   const CustomTextFormField({
@@ -11,6 +12,7 @@ class CustomTextFormField extends StatefulWidget {
     this.textInputAction,
     this.textCapitalization,
     this.controller,
+    this.inputFormatters,
   });
   final String hintText;
   final void Function(String)? onChanged;
@@ -20,6 +22,7 @@ class CustomTextFormField extends StatefulWidget {
   final TextInputAction? textInputAction;
   final TextCapitalization? textCapitalization;
   final TextEditingController? controller;
+  final List<TextInputFormatter>? inputFormatters;
 
   @override
   State<CustomTextFormField> createState() => _CustomtextFormFieldState();
@@ -45,6 +48,7 @@ class _CustomtextFormFieldState extends State<CustomTextFormField> {
       onChanged: widget.onChanged,
       textCapitalization: widget.textCapitalization ?? TextCapitalization.words,
       validator: widget.validator,
+      inputFormatters: widget.inputFormatters,
       textInputAction: widget.textInputAction,
       keyboardType: widget.textInputType,
       obscureText: obscureText,

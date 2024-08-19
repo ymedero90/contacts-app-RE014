@@ -10,8 +10,8 @@ import 'package:equatable/equatable.dart';
 part 'contact_register_event.dart';
 part 'contact_register_state.dart';
 
-class RegisterUserFormBloc extends Bloc<RegisterContactFormEvent, RegisterContactFormState> {
-  RegisterUserFormBloc({
+class RegisterContactFormBloc extends Bloc<RegisterContactFormEvent, RegisterContactFormState> {
+  RegisterContactFormBloc({
     required IAuthRepository authRepository,
     required IUserRepository userRepository,
     required IContactsRepository contactsRepository,

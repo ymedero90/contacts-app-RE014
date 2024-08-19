@@ -25,7 +25,7 @@ class LoginHeaderWidget extends StatelessWidget {
             text: const TextSpan(
               text: "Welcome to",
               style: TextStyle(
-                fontSize: 46,
+                fontSize: 48,
                 fontWeight: FontWeight.bold,
                 color: Colors.lightBlue,
               ),
@@ -33,7 +33,7 @@ class LoginHeaderWidget extends StatelessWidget {
                 TextSpan(
                   text: " App Contacts",
                   style: TextStyle(
-                    fontSize: 46,
+                    fontSize: 50,
                     fontWeight: FontWeight.bold,
                     color: Colors.blueGrey,
                   ),

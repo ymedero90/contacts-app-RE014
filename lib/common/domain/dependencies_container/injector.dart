@@ -9,6 +9,7 @@ import 'package:contacts_app_re014/features/contacts/domain/datasources/contacts
 import 'package:contacts_app_re014/features/contacts/domain/repositories/contacts_repository.dart';
 import 'package:contacts_app_re014/features/contacts/infrastructure/datasource/contacts_local_datasource.dart';
 import 'package:contacts_app_re014/features/contacts/infrastructure/repositories/contacts_repository.dart';
+import 'package:contacts_app_re014/features/users/application/user_register/register_bloc.dart';
 import 'package:contacts_app_re014/features/users/domain/datasources/user_local_datasource.dart';
 import 'package:contacts_app_re014/features/users/domain/repositories/user_repository.dart';
 import 'package:contacts_app_re014/features/users/infrastructure/datasource/user_local_datasource.dart';
@@ -56,11 +57,14 @@ class Injector {
   }
 
   void _registerCubits() {
-    sl.registerSingleton(
-      AuthBloc(
+    sl.registerFactory(
+      () => AuthBloc(
         authRepository: sl<IAuthRepository>(),
         userRepository: sl<IUserRepository>(),
       ),
+    );
+    sl.registerFactory(
+      () => RegisterUserFormBloc(userRepository: sl<IUserRepository>()),
     );
   }
 

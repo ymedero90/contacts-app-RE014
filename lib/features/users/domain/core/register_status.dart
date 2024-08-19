@@ -4,4 +4,5 @@ enum RegisterUserStatus {
   submitting,
   success,
   fail,
+  emailAlreadyExist,
 }

@@ -1,16 +1,31 @@
 class AppValidators {
-  static bool nameValidator(String name) {
-    return true;
-  }
-
-  static String? emailValidator(String? email) {
-    if (email != null) {
-      if (email.length < 6 && email.length > 50) {
-        return "This field must have a maximum of 50 and a minimum of 6 characters.";
+  static String? nameValidator(String? name) {
+    if (name != null) {
+      if (name.length < 4 || name.length > 50) {
+        return "This field must have a maximum of 50 and a minimum of 4 characters.";
       }
     } else {
       return "This field is required";
     }
+    return null;
+  }
+
+  static String? emailValidator(String? email) {
+    if (email == null || email.isEmpty) {
+      return "This field is required";
+    }
+
+    if (email.length < 6 || email.length > 50) {
+      return "This field must have a maximum of 50 and a minimum of 6 characters.";
+    }
+
+    final emailRegex = RegExp(
+      r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$',
+    );
+    if (!emailRegex.hasMatch(email)) {
+      return "Please enter a valid email address.";
+    }
+
     return null;
   }
 
@@ -54,6 +69,14 @@ class AppValidators {
       return null;
     } else {
       return "This field is required";
+    }
+  }
+
+  static String? passwordMatchValidator(String? password, String? confirmPassword) {
+    if (password == confirmPassword) {
+      return null;
+    } else {
+      return "Does not match the password.";
     }
   }
 }

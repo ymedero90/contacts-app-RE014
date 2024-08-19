@@ -7,4 +7,5 @@ class RouteObject {
 
 class Routes {
   static RouteObject login = RouteObject(name: "Login", path: '/');
+  static RouteObject userRegister = RouteObject(name: "UserRegister", path: '/userRegister');
 }
