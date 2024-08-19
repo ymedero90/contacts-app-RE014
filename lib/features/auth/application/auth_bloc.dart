@@ -16,7 +16,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     required IUserRepository userRepository,
   })  : _authRepository = authRepository,
         _userRepository = userRepository,
-        super(const AuthState.unknown()) {
+        super(const AuthState.initial()) {
     on<AuthLogin>(_onSubscriptionRequested);
     on<AuthLogout>(_onLogoutPressed);
   }
