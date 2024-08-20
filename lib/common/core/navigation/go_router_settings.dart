@@ -2,6 +2,10 @@ import 'package:contacts_app_re014/common/core/navigation/routes.dart';
 import 'package:contacts_app_re014/common/domain/dependencies_container/injector.dart';
 import 'package:contacts_app_re014/features/auth/application/auth_bloc.dart';
 import 'package:contacts_app_re014/features/auth/presentation/index.dart';
+import 'package:contacts_app_re014/features/contacts/application/contact_register/contact_register_bloc.dart';
+import 'package:contacts_app_re014/features/contacts/application/contacts_list/contacts_list_bloc.dart';
+import 'package:contacts_app_re014/features/contacts/presentation/pages/contact_list_page.dart';
+import 'package:contacts_app_re014/features/contacts/presentation/pages/contact_register_page.dart';
 import 'package:contacts_app_re014/features/users/application/user_details/user_details_bloc.dart';
 import 'package:contacts_app_re014/features/users/application/user_register/register_bloc.dart';
 import 'package:contacts_app_re014/features/users/presentation/pages/user_details_page.dart';
@@ -40,6 +44,26 @@ class GoRouterSettings {
           return BlocProvider(
             create: (context) => Injector.sl<UserDetailsBloc>(),
             child: const UserDetailsPage(),
+          );
+        },
+      ),
+      GoRoute(
+        name: Routes.contactList.name,
+        path: Routes.contactList.path,
+        builder: (context, state) {
+          return BlocProvider(
+            create: (context) => Injector.sl<ContactListBloc>(),
+            child: const ContactListPage(),
+          );
+        },
+      ),
+      GoRoute(
+        name: Routes.contactRegister.name,
+        path: Routes.contactRegister.path,
+        builder: (context, state) {
+          return BlocProvider(
+            create: (context) => Injector.sl<RegisterContactFormBloc>(),
+            child: const ContactRegisterPage(),
           );
         },
       ),

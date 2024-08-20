@@ -7,4 +7,8 @@ sealed class ContactsListEvent extends Equatable {
   List<Object> get props => [];
 }
 
-final class OnGetContactsEvent extends ContactsListEvent {}
+final class OnGetContactsEvent extends ContactsListEvent {
+  final String? filter;
+
+  const OnGetContactsEvent({this.filter});
+}

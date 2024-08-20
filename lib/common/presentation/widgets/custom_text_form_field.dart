@@ -13,6 +13,7 @@ class CustomTextFormField extends StatefulWidget {
     this.textCapitalization,
     this.controller,
     this.inputFormatters,
+    this.autovalidateMode,
   });
   final String hintText;
   final void Function(String)? onChanged;
@@ -23,6 +24,7 @@ class CustomTextFormField extends StatefulWidget {
   final TextCapitalization? textCapitalization;
   final TextEditingController? controller;
   final List<TextInputFormatter>? inputFormatters;
+  final AutovalidateMode? autovalidateMode;
 
   @override
   State<CustomTextFormField> createState() => _CustomtextFormFieldState();
@@ -40,6 +42,7 @@ class _CustomtextFormFieldState extends State<CustomTextFormField> {
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
     return TextFormField(
+      autovalidateMode: widget.autovalidateMode,
       onTapOutside: (event) {
         FocusManager.instance.primaryFocus!.unfocus();
       },
@@ -54,18 +57,17 @@ class _CustomtextFormFieldState extends State<CustomTextFormField> {
       obscureText: obscureText,
       decoration: InputDecoration(
         hintText: widget.hintText,
-        hintStyle: Theme.of(context)
-            .textTheme
-            .bodyLarge!
-            .copyWith(color: Theme.of(context).textTheme.bodyLarge!.color!.withOpacity(.36)),
+        hintStyle: const TextStyle(color: Colors.blueGrey),
         errorMaxLines: 2,
         border: InputBorder.none,
+        fillColor: Colors.white,
+        filled: true,
         enabledBorder: const OutlineInputBorder(
-          borderSide: BorderSide(color: Colors.blueGrey),
+          borderSide: BorderSide(color: Colors.lightBlue),
           borderRadius: BorderRadius.all(Radius.circular(4)),
         ),
         focusedBorder: const OutlineInputBorder(
-          borderSide: BorderSide(color: Colors.blueGrey),
+          borderSide: BorderSide(color: Colors.lightBlue),
           borderRadius: BorderRadius.all(Radius.circular(4)),
         ),
         errorBorder: const OutlineInputBorder(

@@ -8,13 +8,13 @@ class ImagePickerService {
 
   Future<File?> pickImageFromGallery() async {
     try {
-      Directory? appTmp = await getTemporaryDirectory();
+      Directory? directory = await getApplicationDocumentsDirectory();
       final XFile? pickedFile = await _picker.pickImage(source: ImageSource.gallery);
       if (pickedFile != null) {
-        final bytes = await pickedFile.readAsBytes();
+        final String path = '${directory.path}/${DateTime.now().millisecondsSinceEpoch}.png';
         final file = File(pickedFile.path);
-        await file.writeAsBytes(bytes);
-        return file;
+        final File savedImage = await file.copy(path);
+        return savedImage;
       }
     } catch (e) {
       print("Error picking image from gallery: $e");
@@ -24,13 +24,13 @@ class ImagePickerService {
 
   Future<File?> captureImageWithCamera() async {
     try {
-      Directory? appTmp = await getTemporaryDirectory();
+      Directory? directory = await getApplicationDocumentsDirectory();
       final XFile? pickedFile = await _picker.pickImage(source: ImageSource.camera);
       if (pickedFile != null) {
-        final bytes = await pickedFile.readAsBytes();
+        final String path = '${directory.path}/${DateTime.now().millisecondsSinceEpoch}.png';
         final file = File(pickedFile.path);
-        await file.writeAsBytes(bytes);
-        return file;
+        final File savedImage = await file.copy(path);
+        return savedImage;
       }
     } catch (e) {
       print("Error capturing image with camera: $e");

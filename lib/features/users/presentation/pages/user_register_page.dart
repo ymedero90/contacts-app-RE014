@@ -16,15 +16,17 @@ class UserRegisterPage extends StatefulWidget {
 
 class _UserRegisterPageState extends State<UserRegisterPage> {
   GlobalKey<FormState> formKey = GlobalKey<FormState>();
-  TextEditingController nameController = TextEditingController(text: 'Yoel');
-  TextEditingController emailController = TextEditingController(text: 'ymedero90@gmail.com');
-  TextEditingController passController = TextEditingController(text: 'Qwerty12345@');
-  TextEditingController confirmPassController = TextEditingController(text: 'Qwerty12345@');
+  TextEditingController nameController = TextEditingController();
+  TextEditingController emailController = TextEditingController();
+  TextEditingController passController = TextEditingController();
+  TextEditingController confirmPassController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
     return Scaffold(
+      backgroundColor: Colors.white,
+      resizeToAvoidBottomInset: false,
       body: SafeArea(
         child: BlocConsumer<RegisterUserFormBloc, RegisterUserFormState>(
           listener: (context, state) {
@@ -69,15 +71,18 @@ class _UserRegisterPageState extends State<UserRegisterPage> {
                     child: Container(
                       margin: EdgeInsets.symmetric(horizontal: size.width * .08, vertical: size.height * .06),
                       child: Form(
+                        autovalidateMode: AutovalidateMode.onUserInteraction,
                         key: formKey,
                         child: SingleChildScrollView(
                           child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
                             children: [
                               CustomTextFormField(
                                 hintText: "User Name",
                                 controller: nameController,
                                 textInputAction: TextInputAction.next,
                                 textInputType: TextInputType.name,
+                                textCapitalization: TextCapitalization.words,
                                 onChanged: (p0) {},
                                 inputFormatters: [FilteringTextInputFormatter.allow(RegExp(r'[a-zA-Z\s]'))],
                                 validator: (value) {
@@ -88,6 +93,7 @@ class _UserRegisterPageState extends State<UserRegisterPage> {
                               CustomTextFormField(
                                 hintText: "User Email",
                                 controller: emailController,
+                                textCapitalization: TextCapitalization.none,
                                 textInputAction: TextInputAction.next,
                                 textInputType: TextInputType.emailAddress,
                                 onChanged: (p0) {},
@@ -101,6 +107,7 @@ class _UserRegisterPageState extends State<UserRegisterPage> {
                                 controller: passController,
                                 textInputAction: TextInputAction.next,
                                 textInputType: TextInputType.visiblePassword,
+                                textCapitalization: TextCapitalization.none,
                                 isPasswordType: true,
                                 onChanged: (p0) {},
                                 validator: (value) {
@@ -112,6 +119,7 @@ class _UserRegisterPageState extends State<UserRegisterPage> {
                                 hintText: "Confirm Password",
                                 controller: confirmPassController,
                                 textInputAction: TextInputAction.done,
+                                textCapitalization: TextCapitalization.none,
                                 textInputType: TextInputType.visiblePassword,
                                 isPasswordType: true,
                                 onChanged: (p0) {},
@@ -119,22 +127,24 @@ class _UserRegisterPageState extends State<UserRegisterPage> {
                                   return AppValidators.passwordMatchValidator(passController.text, value);
                                 },
                               ),
-                              CustomButton(
-                                text: 'Save',
-                                suffixIcon: state.status == RegisterUserStatus.submitting
-                                    ? SizedBox(
-                                        height: size.height * .033,
-                                        width: size.height * .033,
-                                        child: const CircularProgressIndicator(color: Colors.white),
-                                      )
-                                    : const Icon(
-                                        Icons.chevron_right_rounded,
-                                        color: Colors.white,
-                                        size: 28,
-                                      ),
-                                margin: EdgeInsets.only(top: size.height * .04, bottom: size.height * .01),
-                                onPressed: () => state.status != RegisterUserStatus.submitting ? onSubmit() : {},
-                              ),
+                              if (MediaQuery.of(context).viewInsets.bottom == 0)
+                                CustomButton(
+                                  text: 'Save',
+                                  suffixIcon: state.status == RegisterUserStatus.submitting
+                                      ? SizedBox(
+                                          height: size.height * .033,
+                                          width: size.height * .033,
+                                          child: const CircularProgressIndicator(color: Colors.white),
+                                        )
+                                      : const Icon(
+                                          Icons.chevron_right_rounded,
+                                          color: Colors.white,
+                                          size: 28,
+                                        ),
+                                  enable: formKey.currentState != null && formKey.currentState!.validate(),
+                                  margin: EdgeInsets.only(top: size.height * .04, bottom: size.height * .01),
+                                  onPressed: () => state.status != RegisterUserStatus.submitting ? onSubmit() : {},
+                                ),
                             ],
                           ),
                         ),
@@ -151,14 +161,12 @@ class _UserRegisterPageState extends State<UserRegisterPage> {
   }
 
   void onSubmit() {
-    if (formKey.currentState!.validate()) {
-      context.read<RegisterUserFormBloc>().add(
-            FormSubmitted(
-              name: nameController.text,
-              email: emailController.text,
-              password: passController.text,
-            ),
-          );
-    }
+    context.read<RegisterUserFormBloc>().add(
+          FormSubmitted(
+            name: nameController.text,
+            email: emailController.text,
+            password: passController.text,
+          ),
+        );
   }
 }

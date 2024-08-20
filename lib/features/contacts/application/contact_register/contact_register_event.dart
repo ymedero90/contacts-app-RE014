@@ -7,22 +7,9 @@ sealed class RegisterContactFormEvent extends Equatable {
   List<Object> get props => [];
 }
 
-final class NameChanged extends RegisterContactFormEvent {
-  const NameChanged({required this.name});
-
+final class FormSubmitted extends RegisterContactFormEvent {
   final String name;
-
-  @override
-  List<Object> get props => [name];
-}
-
-final class IdChanged extends RegisterContactFormEvent {
-  const IdChanged({required this.id});
-
   final String id;
 
-  @override
-  List<Object> get props => [id];
+  const FormSubmitted({required this.name, required this.id});
 }
-
-final class FormSubmitted extends RegisterContactFormEvent {}

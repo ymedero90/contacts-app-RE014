@@ -21,6 +21,7 @@ class _UserDetailsPageState extends State<UserDetailsPage> {
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
     return Scaffold(
+      backgroundColor: Colors.white,
       body: SafeArea(
         child: BlocConsumer<UserDetailsBloc, UserDetailsState>(
           listener: (context, state) {
@@ -51,7 +52,9 @@ class _UserDetailsPageState extends State<UserDetailsPage> {
           builder: (context, state) {
             if (state.status == UserDetailsStatus.loadingUser) {
               return const Center(
-                child: CircularProgressIndicator(),
+                child: CircularProgressIndicator(
+                  color: Colors.lightBlueAccent,
+                ),
               );
             }
             if (state.status == UserDetailsStatus.logout) {
@@ -80,13 +83,13 @@ class _UserDetailsPageState extends State<UserDetailsPage> {
                                   OnChangeUserAvatarEvent(source: source),
                                 );
                           }),
-                      SizedBox(height: size.height * .02),
+                      SizedBox(height: size.height * .04),
                       Text(
                         state.user!.name,
                         style: const TextStyle(
                           fontSize: 28,
                           fontWeight: FontWeight.bold,
-                          color: Colors.blueGrey,
+                          color: Colors.lightBlue,
                         ),
                       ),
                       Text(
@@ -109,7 +112,9 @@ class _UserDetailsPageState extends State<UserDetailsPage> {
                         size: 28,
                       ),
                       margin: EdgeInsets.only(top: size.height * .04, bottom: size.height * .01),
-                      onPressed: () {},
+                      onPressed: () {
+                        context.pushNamed(Routes.contactList.name);
+                      },
                     ),
                   ),
                 ],

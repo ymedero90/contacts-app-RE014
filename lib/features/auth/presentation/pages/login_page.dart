@@ -3,6 +3,7 @@ import 'package:contacts_app_re014/common/index.dart';
 import 'package:contacts_app_re014/features/auth/application/auth_bloc.dart';
 import 'package:contacts_app_re014/features/auth/domain/core/auth_status.dart';
 import 'package:contacts_app_re014/features/auth/presentation/widgets/login_header_widget.dart';
+import 'package:contacts_app_re014/features/auth/presentation/widgets/or_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
@@ -16,13 +17,14 @@ class LoginPage extends StatefulWidget {
 
 class _LoginPageState extends State<LoginPage> {
   GlobalKey<FormState> formKey = GlobalKey<FormState>();
-  TextEditingController emailController = TextEditingController(text: 'ymedero90@gmail.com');
-  TextEditingController passController = TextEditingController(text: 'Qwerty12345@');
+  TextEditingController emailController = TextEditingController();
+  TextEditingController passController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
     return Scaffold(
+      backgroundColor: Colors.white,
       body: SafeArea(
         child: BlocConsumer<AuthBloc, AuthState>(
           listener: (context, state) {
@@ -48,7 +50,9 @@ class _LoginPageState extends State<LoginPage> {
             switch (state.status) {
               case AuthStatus.checkingUserSession:
                 return const Center(
-                  child: CircularProgressIndicator(),
+                  child: CircularProgressIndicator(
+                    color: Colors.lightBlueAccent,
+                  ),
                 );
               case AuthStatus.autoLogin:
                 return Container();
@@ -61,20 +65,23 @@ class _LoginPageState extends State<LoginPage> {
                       mainAxisAlignment: MainAxisAlignment.center,
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
-                        LoginHeaderWidget(size: size),
                         Expanded(
                           child: Form(
                             key: formKey,
+                            autovalidateMode: AutovalidateMode.onUserInteraction,
                             child: Center(
                               child: SingleChildScrollView(
                                 child: Column(
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   children: [
+                                    LoginHeaderWidget(size: size),
+                                    SizedBox(height: size.height * .04),
                                     CustomTextFormField(
                                       hintText: "User email",
                                       controller: emailController,
                                       textInputAction: TextInputAction.next,
                                       textInputType: TextInputType.emailAddress,
+                                      textCapitalization: TextCapitalization.none,
                                       onChanged: (p0) {},
                                       validator: (value) {
                                         return AppValidators.emailSimpleValidator(value);
@@ -94,6 +101,7 @@ class _LoginPageState extends State<LoginPage> {
                                     ),
                                     CustomButton(
                                       text: 'Sign In',
+                                      enable: formKey.currentState != null && formKey.currentState!.validate(),
                                       suffixIcon: state.status == AuthStatus.submitting
                                           ? SizedBox(
                                               height: size.height * .033,
@@ -108,6 +116,7 @@ class _LoginPageState extends State<LoginPage> {
                                       margin: EdgeInsets.only(top: size.height * .04, bottom: size.height * .01),
                                       onPressed: () => state.status != AuthStatus.submitting ? onSubmit() : {},
                                     ),
+                                    const OrDivider(),
                                     CustomButton(
                                       text: 'Sign Up',
                                       color: Colors.blueGrey,
@@ -137,11 +146,9 @@ class _LoginPageState extends State<LoginPage> {
   }
 
   void onSubmit() {
-    if (formKey.currentState!.validate()) {
-      context.read<AuthBloc>().add(AuthLogin(
-            email: emailController.text,
-            password: passController.text,
-          ));
-    }
+    context.read<AuthBloc>().add(AuthLogin(
+          email: emailController.text,
+          password: passController.text,
+        ));
   }
 }

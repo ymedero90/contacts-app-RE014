@@ -21,8 +21,8 @@ class UserDetailsHeaderWidget extends StatelessWidget {
           child: Container(
             margin: EdgeInsets.only(top: size.width * .04, right: size.width * .04),
             child: Icon(
-              Icons.logout_rounded,
-              size: size.height * .046,
+              Icons.logout_outlined,
+              size: size.height * .048,
               color: Colors.lightBlue,
             ),
           ),

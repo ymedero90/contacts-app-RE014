@@ -1,17 +1,18 @@
 part of 'contacts_list_bloc.dart';
 
 class ContactsListState extends Equatable {
-  const ContactsListState._({this.contacts = const [], this.error});
+  const ContactsListState._({this.contacts = const [], this.status = RegisterListtStatus.loading});
 
   const ContactsListState.initail() : this._();
 
-  const ContactsListState.fetched(List<ContactEntity> contacts) : this._(contacts: contacts);
+  const ContactsListState.fetched(List<ContactEntity> contacts)
+      : this._(contacts: contacts, status: RegisterListtStatus.success);
 
-  const ContactsListState.fail(String? error) : this._(error: error);
+  const ContactsListState.fail(String? error) : this._(status: RegisterListtStatus.fail);
 
   final List<ContactEntity> contacts;
-  final String? error;
+  final RegisterListtStatus status;
 
   @override
-  List<Object?> get props => [contacts, error];
+  List<Object?> get props => [contacts, status];
 }

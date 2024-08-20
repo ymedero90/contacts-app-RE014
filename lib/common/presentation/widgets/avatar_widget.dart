@@ -28,7 +28,7 @@ class _AvatarWidgetState extends State<AvatarWidget> {
         builder: (context) {
           return Container(
             color: Colors.white,
-            height: size.height * .12,
+            height: size.height * .14,
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
@@ -63,14 +63,14 @@ class _AvatarWidgetState extends State<AvatarWidget> {
       child: Stack(
         children: [
           CircleAvatar(
-            radius: size.height * .08,
+            radius: size.height * .1,
             backgroundColor: Colors.lightBlue,
             backgroundImage: widget.avatarPath != null ? FileImage(File(widget.avatarPath!)) : null,
             child: widget.avatarPath == null
                 ? Icon(
                     Icons.person,
                     color: Colors.white,
-                    size: size.height * .1,
+                    size: size.height * .12,
                   )
                 : Container(),
           ),
@@ -80,9 +80,10 @@ class _AvatarWidgetState extends State<AvatarWidget> {
             child: Container(
               padding: EdgeInsets.all(size.height * .01),
               decoration: BoxDecoration(color: Colors.white, borderRadius: BorderRadius.circular(size.height * .04)),
-              child: const Icon(
+              child: Icon(
                 Icons.edit,
                 color: Colors.lightBlue,
+                size: size.height * .04,
               ),
             ),
           ),

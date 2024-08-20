@@ -15,27 +15,29 @@ class LoginHeaderWidget extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const Text("Hello",
-              style: TextStyle(
-                fontSize: 46,
-                fontWeight: FontWeight.bold,
-                color: Colors.blueGrey,
-              )),
           RichText(
             text: const TextSpan(
-              text: "Welcome to",
+              text: "Welcome",
               style: TextStyle(
-                fontSize: 48,
+                fontSize: 42,
                 fontWeight: FontWeight.bold,
-                color: Colors.lightBlue,
+                color: Colors.blueGrey,
               ),
               children: [
                 TextSpan(
-                  text: " App Contacts",
+                  text: " to",
                   style: TextStyle(
-                    fontSize: 50,
+                    fontSize: 42,
                     fontWeight: FontWeight.bold,
                     color: Colors.blueGrey,
+                  ),
+                ),
+                TextSpan(
+                  text: " App Contacts",
+                  style: TextStyle(
+                    fontSize: 46,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.lightBlue,
                   ),
                 )
               ],

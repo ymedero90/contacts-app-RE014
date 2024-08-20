@@ -1,8 +1,30 @@
 class AppValidators {
   static String? nameValidator(String? name) {
-    if (name != null) {
+    if (name != null && name.isNotEmpty) {
       if (name.length < 4 || name.length > 50) {
         return "This field must have a maximum of 50 and a minimum of 4 characters.";
+      }
+    } else {
+      return "This field is required";
+    }
+    return null;
+  }
+
+  static String? contactNameValidator(String? name) {
+    if (name != null && name.isNotEmpty) {
+      if (name.length < 2 || name.length > 50) {
+        return "This field must have a maximum of 50 and a minimum of 4 characters.";
+      }
+    } else {
+      return "This field is required";
+    }
+    return null;
+  }
+
+  static String? contactIDValidator(String? id) {
+    if (id != null && id.isNotEmpty) {
+      if (id.length < 6 || id.length > 10) {
+        return "This field must have a maximum of 10 and a minimum of 4 characters.";
       }
     } else {
       return "This field is required";

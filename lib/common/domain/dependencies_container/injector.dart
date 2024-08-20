@@ -5,6 +5,8 @@ import 'package:contacts_app_re014/features/auth/domain/datasources/index.dart';
 import 'package:contacts_app_re014/features/auth/domain/repositories/auth_repository.dart';
 import 'package:contacts_app_re014/features/auth/infrastructure/datasource/auth_local_datasource.dart';
 import 'package:contacts_app_re014/features/auth/infrastructure/repositories/auth_repository.dart';
+import 'package:contacts_app_re014/features/contacts/application/contact_register/contact_register_bloc.dart';
+import 'package:contacts_app_re014/features/contacts/application/contacts_list/contacts_list_bloc.dart';
 import 'package:contacts_app_re014/features/contacts/domain/datasources/contacts_local_datasource.dart';
 import 'package:contacts_app_re014/features/contacts/domain/repositories/contacts_repository.dart';
 import 'package:contacts_app_re014/features/contacts/infrastructure/datasource/contacts_local_datasource.dart';
@@ -53,7 +55,7 @@ class Injector {
       () => UserRepository(local: sl<IUserLocalDataSource>()),
     );
     sl.registerLazySingleton<IContactsRepository>(
-      () => ContactsRepository(local: sl<ContactsLocalDataSource>()),
+      () => ContactsRepository(local: sl<IContactsLocalDataSource>()),
     );
   }
 
@@ -73,6 +75,18 @@ class Injector {
         authRepository: sl<IAuthRepository>(),
         userRepository: sl<IUserRepository>(),
         imagePickerService: sl<ImagePickerService>(),
+      ),
+    );
+    sl.registerFactory(
+      () => ContactListBloc(
+        authRepository: sl<IAuthRepository>(),
+        contactsRepository: sl<IContactsRepository>(),
+      ),
+    );
+    sl.registerFactory(
+      () => RegisterContactFormBloc(
+        authRepository: sl<IAuthRepository>(),
+        contactsRepository: sl<IContactsRepository>(),
       ),
     );
   }

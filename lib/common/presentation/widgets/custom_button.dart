@@ -11,6 +11,7 @@ class CustomButton extends StatelessWidget {
   final double? height;
   final EdgeInsets? margin;
   final Widget? suffixIcon;
+  final bool enable;
 
   const CustomButton({
     super.key,
@@ -24,26 +25,26 @@ class CustomButton extends StatelessWidget {
     this.height,
     this.margin,
     this.suffixIcon,
+    this.enable = true,
   });
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: onPressed,
+      onTap: enable ? onPressed : null,
       child: Container(
         height: height,
         width: width,
         margin: margin ?? EdgeInsets.zero,
         decoration: BoxDecoration(
-          color: color ?? Colors.lightBlue,
+          color: enable ? color ?? Colors.lightBlue : Colors.lightBlue.withOpacity(.4),
           borderRadius: BorderRadius.circular(4),
-          boxShadow: [
+          boxShadow: const [
             BoxShadow(
-              color: Colors.black.withOpacity(0.2),
-              spreadRadius: 1,
-              blurRadius: 6,
-              offset: const Offset(0, 4),
-            ),
+              color: Color.fromRGBO(0, 0, 0, 0.04),
+              offset: Offset(0, 3),
+              blurRadius: 5,
+            )
           ],
         ),
         padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 15),
