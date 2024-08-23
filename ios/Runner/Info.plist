@@ -28,7 +28,8 @@
 	<string>LaunchScreen</string>
 	<key>UIMainStoryboardFile</key>
 	<string>Main</string>
-
+	<key>NSFaceIDUsageDescription</key>
+	<string>ContactApp requires access to your on-device authentication.</string>
 	<key>NSCameraUsageDescription</key>
 	<string>ContactApp requires access to your camera so you can take photos directly from the app.</string>
 	<key>NSPhotoLibraryAddUsageDescription</key>
