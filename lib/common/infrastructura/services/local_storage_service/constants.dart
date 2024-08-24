@@ -1,5 +1,6 @@
 class LocalBoxes {
   static const AppBox = "AppBox";
+  static const AuthBox = "AuthBox";
   static const UsersBox = "UsersBox";
   static const ContactsBox = "ContactsBox";
 
@@ -7,6 +8,7 @@ class LocalBoxes {
     AppBox,
     UsersBox,
     ContactsBox,
+    AuthBox,
   ];
 }
 

@@ -2,6 +2,7 @@ import 'package:contacts_app_re014/common/core/navigation/go_router_settings.dar
 import 'package:contacts_app_re014/common/domain/dependencies_container/injector.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -10,6 +11,7 @@ Future<void> main() async {
     DeviceOrientation.portraitDown,
   ]);
   SystemChrome.setEnabledSystemUIMode(SystemUiMode.manual, overlays: SystemUiOverlay.values);
+  await dotenv.load(fileName: ".env");
   await Injector.onInit();
   runApp(const MyApp());
 }

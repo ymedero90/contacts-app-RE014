@@ -1,4 +1,5 @@
 import 'package:contacts_app_re014/common/index.dart';
+import 'package:contacts_app_re014/common/infrastructura/services/local_storage_service%20copy/index.dart';
 import 'package:contacts_app_re014/common/infrastructura/services/local_storage_service/local_storage_service.dart';
 import 'package:contacts_app_re014/features/auth/application/auth_bloc.dart';
 import 'package:contacts_app_re014/features/auth/domain/datasources/index.dart';
@@ -17,6 +18,7 @@ import 'package:contacts_app_re014/features/users/domain/datasources/user_local_
 import 'package:contacts_app_re014/features/users/domain/repositories/user_repository.dart';
 import 'package:contacts_app_re014/features/users/infrastructure/datasource/user_local_datasource.dart';
 import 'package:contacts_app_re014/features/users/infrastructure/index.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:get_it/get_it.dart';
 
 class Injector {
@@ -64,10 +66,16 @@ class Injector {
       () => AuthBloc(
         authRepository: sl<IAuthRepository>(),
         userRepository: sl<IUserRepository>(),
+        securityService: sl<SecurityService>(),
+        biometricAuthService: sl<BiometricAuthService>(),
       ),
     );
     sl.registerFactory(
-      () => RegisterUserFormBloc(userRepository: sl<IUserRepository>()),
+      () => RegisterUserFormBloc(
+        userRepository: sl<IUserRepository>(),
+        authRepository: sl<IAuthRepository>(),
+        securityService: sl<SecurityService>(),
+      ),
     );
 
     sl.registerFactory(
@@ -96,5 +104,9 @@ class Injector {
     await localStorageService.init();
     sl.registerSingleton<LocalStorageService>(localStorageService);
     sl.registerSingleton(ImagePickerService());
+    sl.registerSingleton(BiometricAuthService());
+    final keyString = dotenv.env['KEY_STRING']!;
+    final ivString = dotenv.env['IV_STRING']!;
+    sl.registerSingleton(SecurityService(keyString, ivString));
   }
 }
