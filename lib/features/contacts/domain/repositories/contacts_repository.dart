@@ -6,4 +6,5 @@ abstract class IContactsRepository {
   Future<Either<Failure, List<ContactEntity>>> getContacts({required String userEmail});
   Future<Either<Failure, ContactEntity>> getContact({required String id});
   Future<Either<Failure, void>> addContact({required ContactEntity contact});
+  Future<Either<Failure, void>> removeContact({required ContactEntity contact});
 }

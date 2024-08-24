@@ -21,7 +21,7 @@ class AppValidators {
     return null;
   }
 
-  static String? contactIDValidator(String? id) {
+  static String? contactPhoneValidator(String? id) {
     if (id != null && id.isNotEmpty) {
       if (id.length < 6 || id.length > 10) {
         return "This field must have a maximum of 10 and a minimum of 4 characters.";

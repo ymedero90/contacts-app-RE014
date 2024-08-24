@@ -8,8 +8,17 @@ sealed class RegisterContactFormEvent extends Equatable {
 }
 
 final class FormSubmitted extends RegisterContactFormEvent {
+  final String? id;
   final String name;
-  final String id;
+  final String phoneNumber;
+  final bool isEditing;
+  final bool fromApp;
 
-  const FormSubmitted({required this.name, required this.id});
+  const FormSubmitted({
+    this.id,
+    required this.name,
+    required this.phoneNumber,
+    required this.isEditing,
+    required this.fromApp,
+  });
 }

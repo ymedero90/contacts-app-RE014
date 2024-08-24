@@ -6,6 +6,7 @@ import 'package:contacts_app_re014/features/contacts/presentation/widgets/contac
 import 'package:contacts_app_re014/features/contacts/presentation/widgets/search_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:go_router/go_router.dart';
 
 class ContactListPage extends StatefulWidget {
@@ -89,56 +90,149 @@ class _ContactListPageState extends State<ContactListPage> {
                                                     itemBuilder: (context, index) {
                                                       return Container(
                                                         margin: EdgeInsets.symmetric(horizontal: size.width * .08),
-                                                        decoration: BoxDecoration(
-                                                          color: Colors.lightBlue,
-                                                          borderRadius: BorderRadius.circular(4),
-                                                          boxShadow: const [
-                                                            BoxShadow(
-                                                              color: Color.fromRGBO(0, 0, 0, 0.1),
-                                                              offset: Offset(0, 3),
-                                                              blurRadius: 5,
-                                                            )
-                                                          ],
-                                                        ),
-                                                        padding: EdgeInsets.symmetric(
-                                                          horizontal: size.width * .04,
-                                                          vertical: size.height * .01,
-                                                        ),
-                                                        child: Row(
-                                                          children: [
-                                                            CircleAvatar(
-                                                              backgroundColor: Colors.white,
-                                                              child: Text(
-                                                                state.contacts[index].name[0],
-                                                                style: const TextStyle(
-                                                                  color: Colors.lightBlue,
-                                                                  fontWeight: FontWeight.bold,
-                                                                  fontSize: 20,
+                                                        child: Slidable(
+                                                          direction: Axis.horizontal,
+                                                          endActionPane: ActionPane(
+                                                            motion: const ScrollMotion(),
+                                                            children: [
+                                                              if (state.contacts[index].fromApp)
+                                                                SlidableAction(
+                                                                  padding: EdgeInsets.zero,
+                                                                  onPressed: (_) async {
+                                                                    await showActionDialog(
+                                                                      context: context,
+                                                                      message: "Do you want to delete this contact?​​",
+                                                                      onAccept: () {
+                                                                        context.read<ContactListBloc>().add(
+                                                                            OnRemoveContactEvent(
+                                                                                contact: state.contacts[index]));
+                                                                        Navigator.of(context).pop();
+                                                                      },
+                                                                      onCancel: () {
+                                                                        Navigator.of(context).pop();
+                                                                      },
+                                                                    );
+                                                                  },
+                                                                  backgroundColor: Colors.red,
+                                                                  foregroundColor: Colors.white,
+                                                                  icon: Icons.delete,
                                                                 ),
+                                                              SlidableAction(
+                                                                padding: EdgeInsets.zero,
+                                                                onPressed: (_) async {
+                                                                  await context
+                                                                      .pushNamed(
+                                                                        Routes.contactRegister.name,
+                                                                        extra: state.contacts[index],
+                                                                      )
+                                                                      .then((value) {});
+                                                                  context.read<ContactListBloc>().add(
+                                                                        const OnGetContactsEvent(),
+                                                                      );
+                                                                },
+                                                                backgroundColor: Colors.orange,
+                                                                foregroundColor: Colors.white,
+                                                                icon: Icons.edit,
                                                               ),
-                                                            ),
-                                                            SizedBox(width: size.width * .04),
-                                                            Column(
-                                                              crossAxisAlignment: CrossAxisAlignment.start,
-                                                              children: [
-                                                                Text(
-                                                                  state.contacts[index].name,
-                                                                  style: const TextStyle(
-                                                                    fontSize: 18,
-                                                                    fontWeight: FontWeight.bold,
-                                                                    color: Colors.white,
+                                                              if (state.contacts[index].fromApp)
+                                                                SlidableAction(
+                                                                  padding: EdgeInsets.zero,
+                                                                  borderRadius: const BorderRadius.only(
+                                                                    topRight: Radius.circular(4),
+                                                                    bottomRight: Radius.circular(4),
                                                                   ),
+                                                                  onPressed: (_) async {
+                                                                    await showActionDialog(
+                                                                      context: context,
+                                                                      message:
+                                                                          "Do you want to add to device this contact?​​",
+                                                                      onAccept: () {
+                                                                        context.read<ContactListBloc>().add(
+                                                                            OnSaveContactEvent(
+                                                                                contact: state.contacts[index]));
+                                                                        Navigator.of(context).pop();
+                                                                      },
+                                                                      onCancel: () {
+                                                                        Navigator.of(context).pop();
+                                                                      },
+                                                                    );
+                                                                  },
+                                                                  backgroundColor: Colors.green,
+                                                                  foregroundColor: Colors.white,
+                                                                  icon: Icons.save,
                                                                 ),
-                                                                Text(
-                                                                  "ID: ${state.contacts[index].id}",
-                                                                  style: const TextStyle(
-                                                                    fontSize: 14,
-                                                                    color: Colors.white,
-                                                                  ),
+                                                            ],
+                                                          ),
+                                                          child: Container(
+                                                            decoration: const BoxDecoration(
+                                                              color: Colors.lightBlue,
+                                                              borderRadius: BorderRadius.only(
+                                                                topLeft: Radius.circular(4),
+                                                                bottomLeft: Radius.circular(4),
+                                                              ),
+                                                              boxShadow: [
+                                                                BoxShadow(
+                                                                  color: Color.fromRGBO(0, 0, 0, 0.1),
+                                                                  offset: Offset(0, 3),
+                                                                  blurRadius: 5,
                                                                 )
                                                               ],
                                                             ),
-                                                          ],
+                                                            padding: EdgeInsets.symmetric(
+                                                              horizontal: size.width * .04,
+                                                              vertical: size.height * .01,
+                                                            ),
+                                                            child: Row(
+                                                              children: [
+                                                                CircleAvatar(
+                                                                  backgroundColor: Colors.white,
+                                                                  child: Text(
+                                                                    state.contacts[index].name.isNotEmpty
+                                                                        ? state.contacts[index].name[0]
+                                                                        : '-',
+                                                                    style: const TextStyle(
+                                                                      color: Colors.lightBlue,
+                                                                      fontWeight: FontWeight.bold,
+                                                                      fontSize: 20,
+                                                                    ),
+                                                                  ),
+                                                                ),
+                                                                SizedBox(width: size.width * .04),
+                                                                Expanded(
+                                                                  child: Column(
+                                                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                                                    children: [
+                                                                      Text(
+                                                                        state.contacts[index].name.isNotEmpty
+                                                                            ? state.contacts[index].name
+                                                                            : '-',
+                                                                        overflow: TextOverflow.ellipsis,
+                                                                        style: const TextStyle(
+                                                                          fontSize: 18,
+                                                                          fontWeight: FontWeight.bold,
+                                                                          color: Colors.white,
+                                                                        ),
+                                                                      ),
+                                                                      Text(
+                                                                        "Phone: ${state.contacts[index].phoneNumber}",
+                                                                        overflow: TextOverflow.ellipsis,
+                                                                        style: const TextStyle(
+                                                                          fontSize: 14,
+                                                                          color: Colors.white,
+                                                                        ),
+                                                                      )
+                                                                    ],
+                                                                  ),
+                                                                ),
+                                                                if (state.contacts[index].fromApp)
+                                                                  Icon(
+                                                                    Icons.phone_android_rounded,
+                                                                    color: Colors.white,
+                                                                    size: size.height * .034,
+                                                                  )
+                                                              ],
+                                                            ),
+                                                          ),
                                                         ),
                                                       );
                                                     },

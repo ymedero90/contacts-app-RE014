@@ -13,6 +13,10 @@ class ContactsLocalDataSource implements IContactsLocalDataSource {
 
   @override
   Future<void> addContact({required ContactDto contact}) async {
+    final exist = await localStorageService.get(contact.id, LocalBoxes.ContactsBox);
+    if (exist != null) {
+      await removeContact(contact: contact);
+    }
     final data = json.encode(contact.toJson());
     await localStorageService.put(
       contact.id,
@@ -38,5 +42,13 @@ class ContactsLocalDataSource implements IContactsLocalDataSource {
     final decoded = data.map((e) => json.decode(e)).toList();
     final response = decoded.map((e) => ContactDto.fromJson(e)).toList();
     return response;
+  }
+
+  @override
+  Future<void> removeContact({required ContactDto contact}) async {
+    await localStorageService.delete(
+      contact.id,
+      LocalBoxes.ContactsBox,
+    );
   }
 }

@@ -33,7 +33,7 @@ class AppBloc extends Bloc<AppEvent, AppState> {
     Emitter<AppState> emit,
   ) async {
     emit(const AppState.initial());
-    timer = Timer.periodic(const Duration(seconds: 10), (timer) {
+    timer = Timer.periodic(const Duration(minutes: 2), (timer) {
       add(AppSessionExpired());
       timer.cancel();
     });
@@ -44,7 +44,7 @@ class AppBloc extends Bloc<AppEvent, AppState> {
     Emitter<AppState> emit,
   ) async {
     emit(const AppState.sessionExpired());
-    timerSecondary = Timer.periodic(const Duration(seconds: 5), (timer) async {
+    timerSecondary = Timer.periodic(const Duration(seconds: 10), (timer) async {
       add(AppSessionRenew(renew: false));
       timer.cancel();
     });
@@ -57,7 +57,7 @@ class AppBloc extends Bloc<AppEvent, AppState> {
     if (event.renew) {
       emit(const AppState.initial());
       timerSecondary.cancel();
-      timer = Timer.periodic(const Duration(seconds: 10), (timer) {
+      timer = Timer.periodic(const Duration(minutes: 2), (timer) {
         add(AppSessionExpired());
         timer.cancel();
       });

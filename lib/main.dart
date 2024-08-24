@@ -36,7 +36,8 @@ class MyApp extends StatelessWidget {
           create: (contextProv) => Injector.sl<AppBloc>(),
           child: BlocListener<AppBloc, AppState>(
             listenWhen: (contextListen, state) {
-              return GoRouterSettings.currentRoute != Routes.login.name;
+              return GoRouterSettings.currentRoute != Routes.login.name &&
+                  GoRouterSettings.currentRoute != Routes.userRegister.name;
             },
             listener: (BuildContext context, AppState state) {
               switch (state.status) {

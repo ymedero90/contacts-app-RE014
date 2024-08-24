@@ -1,6 +1,7 @@
 import 'package:contacts_app_re014/common/index.dart';
 import 'package:contacts_app_re014/features/contacts/application/contact_register/index.dart';
 import 'package:contacts_app_re014/features/contacts/domain/core/register_contacts_status.dart';
+import 'package:contacts_app_re014/features/contacts/domain/entities/contact_entity.dart';
 import 'package:contacts_app_re014/features/contacts/presentation/widgets/contact_register_header_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -8,7 +9,11 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 
 class ContactRegisterPage extends StatefulWidget {
-  const ContactRegisterPage({super.key});
+  const ContactRegisterPage({
+    super.key,
+    this.contact,
+  });
+  final ContactEntity? contact;
 
   @override
   State<ContactRegisterPage> createState() => _ContactRegisterPageState();
@@ -16,8 +21,15 @@ class ContactRegisterPage extends StatefulWidget {
 
 class _ContactRegisterPageState extends State<ContactRegisterPage> {
   GlobalKey<FormState> formKey = GlobalKey<FormState>();
-  TextEditingController nameController = TextEditingController();
-  TextEditingController idController = TextEditingController();
+  late TextEditingController nameController;
+  late TextEditingController phoneController;
+
+  @override
+  void initState() {
+    nameController = TextEditingController(text: widget.contact?.name ?? '');
+    phoneController = TextEditingController(text: widget.contact?.phoneNumber ?? '');
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -86,15 +98,16 @@ class _ContactRegisterPageState extends State<ContactRegisterPage> {
                               ),
                               SizedBox(height: size.height * .02),
                               CustomTextFormField(
-                                hintText: "ID",
-                                controller: idController,
+                                hintText: "Phone",
+                                autovalidateMode: AutovalidateMode.onUserInteraction,
+                                controller: phoneController,
                                 textInputAction: TextInputAction.next,
                                 textCapitalization: TextCapitalization.none,
                                 textInputType: TextInputType.number,
                                 inputFormatters: [FilteringTextInputFormatter.allow(RegExp(r'[0-9]'))],
                                 onChanged: (p0) {},
                                 validator: (value) {
-                                  return AppValidators.contactIDValidator(value);
+                                  return AppValidators.contactPhoneValidator(value);
                                 },
                               ),
                               CustomButton(
@@ -132,8 +145,11 @@ class _ContactRegisterPageState extends State<ContactRegisterPage> {
   void onSubmit() {
     context.read<RegisterContactFormBloc>().add(
           FormSubmitted(
+            id: widget.contact?.id,
             name: nameController.text,
-            id: idController.text,
+            phoneNumber: phoneController.text,
+            isEditing: widget.contact != null,
+            fromApp: widget.contact != null && widget.contact!.fromApp,
           ),
         );
   }

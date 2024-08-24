@@ -4,6 +4,7 @@ import 'package:contacts_app_re014/features/auth/application/auth_bloc.dart';
 import 'package:contacts_app_re014/features/auth/presentation/index.dart';
 import 'package:contacts_app_re014/features/contacts/application/contact_register/contact_register_bloc.dart';
 import 'package:contacts_app_re014/features/contacts/application/contacts_list/contacts_list_bloc.dart';
+import 'package:contacts_app_re014/features/contacts/domain/entities/contact_entity.dart';
 import 'package:contacts_app_re014/features/contacts/presentation/pages/contact_list_page.dart';
 import 'package:contacts_app_re014/features/contacts/presentation/pages/contact_register_page.dart';
 import 'package:contacts_app_re014/features/users/application/user_details/user_details_bloc.dart';
@@ -74,9 +75,10 @@ class GoRouterSettings {
         builder: (context, state) {
           currentContext = context;
           currentRoute = Routes.contactRegister.name;
+          final arg = state.extra as ContactEntity?;
           return BlocProvider(
             create: (context) => Injector.sl<RegisterContactFormBloc>(),
-            child: const ContactRegisterPage(),
+            child: ContactRegisterPage(contact: arg),
           );
         },
       ),

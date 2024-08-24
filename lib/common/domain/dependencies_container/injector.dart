@@ -1,6 +1,6 @@
 import 'package:contacts_app_re014/common/index.dart';
-import 'package:contacts_app_re014/common/infrastructura/services/security_service/index.dart';
 import 'package:contacts_app_re014/common/infrastructura/services/local_storage_service/local_storage_service.dart';
+import 'package:contacts_app_re014/common/infrastructura/services/security_service/index.dart';
 import 'package:contacts_app_re014/features/app/application/app_bloc.dart';
 import 'package:contacts_app_re014/features/auth/application/auth_bloc.dart';
 import 'package:contacts_app_re014/features/auth/domain/datasources/index.dart';
@@ -96,12 +96,14 @@ class Injector {
       () => ContactListBloc(
         authRepository: sl<IAuthRepository>(),
         contactsRepository: sl<IContactsRepository>(),
+        contactService: sl<ContactService>(),
       ),
     );
     sl.registerFactory(
       () => RegisterContactFormBloc(
         authRepository: sl<IAuthRepository>(),
         contactsRepository: sl<IContactsRepository>(),
+        contactService: sl<ContactService>(),
       ),
     );
   }
@@ -111,6 +113,7 @@ class Injector {
     await localStorageService.init();
     sl.registerSingleton<LocalStorageService>(localStorageService);
     sl.registerSingleton(ImagePickerService());
+    sl.registerSingleton(ContactService());
     sl.registerSingleton(BiometricAuthService());
     final keyString = dotenv.env['KEY_STRING']!;
     final ivString = dotenv.env['IV_STRING']!;

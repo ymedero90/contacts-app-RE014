@@ -28,6 +28,8 @@
 	<string>LaunchScreen</string>
 	<key>UIMainStoryboardFile</key>
 	<string>Main</string>
+	<key>NSContactsUsageDescription</key>
+    <string>ContactApp Reason requires access to the contact list</string>
 	<key>NSFaceIDUsageDescription</key>
 	<string>ContactApp requires access to your on-device authentication.</string>
 	<key>NSCameraUsageDescription</key>

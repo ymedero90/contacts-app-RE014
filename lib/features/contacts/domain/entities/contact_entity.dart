@@ -2,11 +2,15 @@ import 'package:equatable/equatable.dart';
 
 class ContactEntity extends Equatable {
   final String id;
+  final String phoneNumber;
+  final bool fromApp;
   final String name;
   final String userEmail;
 
   const ContactEntity({
     required this.id,
+    required this.phoneNumber,
+    this.fromApp = false,
     required this.name,
     required this.userEmail,
   });
@@ -14,10 +18,14 @@ class ContactEntity extends Equatable {
   ContactEntity copyWith({
     String? id,
     String? name,
+    bool? fromApp,
+    String? phoneNumber,
     String? userEmail,
   }) {
     return ContactEntity(
       id: id ?? this.id,
+      phoneNumber: phoneNumber ?? this.phoneNumber,
+      fromApp: fromApp ?? this.fromApp,
       name: name ?? this.name,
       userEmail: userEmail ?? this.userEmail,
     );
@@ -26,6 +34,8 @@ class ContactEntity extends Equatable {
   @override
   List<Object?> get props => [
         id,
+        fromApp,
+        phoneNumber,
         name,
         userEmail,
       ];

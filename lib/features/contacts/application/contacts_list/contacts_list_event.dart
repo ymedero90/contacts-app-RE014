@@ -12,3 +12,15 @@ final class OnGetContactsEvent extends ContactsListEvent {
 
   const OnGetContactsEvent({this.filter});
 }
+
+final class OnSaveContactEvent extends ContactsListEvent {
+  final ContactEntity contact;
+
+  const OnSaveContactEvent({required this.contact});
+}
+
+final class OnRemoveContactEvent extends ContactsListEvent {
+  final ContactEntity contact;
+
+  const OnRemoveContactEvent({required this.contact});
+}

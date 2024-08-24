@@ -8,6 +8,8 @@ class ContactsListState extends Equatable {
   const ContactsListState.fetched(List<ContactEntity> contacts)
       : this._(contacts: contacts, status: RegisterListtStatus.success);
 
+  const ContactsListState.savingContact(RegisterListtStatus status) : this._(status: status);
+
   const ContactsListState.fail(String? error) : this._(status: RegisterListtStatus.fail);
 
   final List<ContactEntity> contacts;

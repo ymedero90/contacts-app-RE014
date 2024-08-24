@@ -46,4 +46,14 @@ class ContactsRepository with ErrorHandling<Failure> implements IContactsReposit
       onFail: (message) => FailWithMessage(message: message),
     );
   }
+
+  @override
+  Future<Either<Failure, void>> removeContact({required ContactEntity contact}) {
+    return process<void>(
+      action: () async {
+        await local.removeContact(contact: ContactDto.fromDomain(contact));
+      },
+      onFail: (message) => FailWithMessage(message: message),
+    );
+  }
 }
