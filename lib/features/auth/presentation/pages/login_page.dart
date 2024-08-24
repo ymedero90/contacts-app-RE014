@@ -1,5 +1,6 @@
 import 'package:contacts_app_re014/common/core/navigation/routes.dart';
 import 'package:contacts_app_re014/common/index.dart';
+import 'package:contacts_app_re014/features/app/application/app_bloc.dart';
 import 'package:contacts_app_re014/features/auth/application/auth_bloc.dart';
 import 'package:contacts_app_re014/features/auth/domain/core/auth_status.dart';
 import 'package:contacts_app_re014/features/auth/presentation/widgets/login_header_widget.dart';
@@ -243,5 +244,6 @@ class _LoginPageState extends State<LoginPage> {
           email: emailController.text,
           password: passController.text,
         ));
+    context.read<AppBloc>().add(AppInitialEvent());
   }
 }

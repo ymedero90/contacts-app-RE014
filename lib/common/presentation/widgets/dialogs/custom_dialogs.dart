@@ -45,7 +45,7 @@ Future<void> showActionDialog({
             ],
           ),
           padding: EdgeInsets.symmetric(vertical: size.height * .02, horizontal: size.width * .02),
-          margin: EdgeInsets.symmetric(vertical: size.height * .3, horizontal: size.width * .1),
+          margin: EdgeInsets.symmetric(vertical: size.height * .26, horizontal: size.width * .1),
           child: Column(
             children: [
               Expanded(

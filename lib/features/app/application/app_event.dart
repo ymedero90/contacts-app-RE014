@@ -20,3 +20,13 @@ final class AppLogout extends AppEvent {
 final class AppInitialEvent extends AppEvent {
   AppInitialEvent();
 }
+
+final class AppSessionExpired extends AppEvent {
+  AppSessionExpired();
+}
+
+final class AppSessionRenew extends AppEvent {
+  final bool renew;
+
+  AppSessionRenew({required this.renew});
+}

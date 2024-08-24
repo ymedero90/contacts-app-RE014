@@ -1,5 +1,5 @@
 import 'package:bloc/bloc.dart';
-import 'package:contacts_app_re014/common/infrastructura/services/local_storage_service%20copy/local_storage_service.dart';
+import 'package:contacts_app_re014/common/infrastructura/services/security_service/security_service.dart';
 import 'package:contacts_app_re014/features/auth/domain/entities/auth_data_entity.dart';
 import 'package:contacts_app_re014/features/auth/domain/repositories/auth_repository.dart';
 import 'package:contacts_app_re014/features/users/domain/index.dart';
@@ -41,7 +41,7 @@ class RegisterUserFormBloc extends Bloc<RegisterUserFormEvent, RegisterUserFormS
             email: event.email,
           ),
         );
-        resp.fold((l) {
+        await resp.fold((l) {
           emit(state.copyWith(status: RegisterUserStatus.fail));
         }, (r) async {
           final hashPassword = _securityService.hashPassword(event.password);

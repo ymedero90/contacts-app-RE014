@@ -4,7 +4,7 @@ import 'package:dartz/dartz.dart';
 
 abstract class IAuthRepository {
   Future<Either<Failure, void>> login({required String email});
-  Future<Either<Failure, void>> logout({required String email});
+  Future<Either<Failure, void>> logout();
   Future<Either<Failure, String>> getSession();
 
   Future<Either<Failure, void>> registerCredentials({required AuthDataEntity data});

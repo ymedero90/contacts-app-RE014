@@ -21,7 +21,7 @@ class AuthRepository with ErrorHandling<Failure> implements IAuthRepository {
   }
 
   @override
-  Future<Either<Failure, void>> logout({required String email}) {
+  Future<Either<Failure, void>> logout() {
     return process<void>(
       action: () async {
         await local.logout();

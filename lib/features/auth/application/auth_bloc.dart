@@ -2,7 +2,7 @@ import 'dart:async';
 
 import 'package:bloc/bloc.dart';
 import 'package:contacts_app_re014/common/index.dart';
-import 'package:contacts_app_re014/common/infrastructura/services/local_storage_service%20copy/index.dart';
+import 'package:contacts_app_re014/common/infrastructura/services/security_service/index.dart';
 import 'package:contacts_app_re014/features/auth/domain/core/auth_status.dart';
 import 'package:contacts_app_re014/features/auth/domain/repositories/auth_repository.dart';
 import 'package:contacts_app_re014/features/users/domain/entities/user_entity.dart';
@@ -147,6 +147,6 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     AuthLogout event,
     Emitter<AuthState> emit,
   ) async {
-    await _authRepository.logout(email: event.email);
+    await _authRepository.logout();
   }
 }

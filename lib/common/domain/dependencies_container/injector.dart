@@ -1,6 +1,7 @@
 import 'package:contacts_app_re014/common/index.dart';
-import 'package:contacts_app_re014/common/infrastructura/services/local_storage_service%20copy/index.dart';
+import 'package:contacts_app_re014/common/infrastructura/services/security_service/index.dart';
 import 'package:contacts_app_re014/common/infrastructura/services/local_storage_service/local_storage_service.dart';
+import 'package:contacts_app_re014/features/app/application/app_bloc.dart';
 import 'package:contacts_app_re014/features/auth/application/auth_bloc.dart';
 import 'package:contacts_app_re014/features/auth/domain/datasources/index.dart';
 import 'package:contacts_app_re014/features/auth/domain/repositories/auth_repository.dart';
@@ -62,6 +63,12 @@ class Injector {
   }
 
   void _registerCubits() {
+    sl.registerFactory(
+      () => AppBloc(
+        authRepository: sl<IAuthRepository>(),
+        userRepository: sl<IUserRepository>(),
+      ),
+    );
     sl.registerFactory(
       () => AuthBloc(
         authRepository: sl<IAuthRepository>(),

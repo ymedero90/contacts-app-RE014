@@ -66,7 +66,7 @@ class UserDetailsBloc extends Bloc<UserDetailsEvent, UserDetailsState> {
     OnLogoutEvent event,
     Emitter<UserDetailsState> emit,
   ) async {
-    final resp = await _authRepository.logout(email: event.userEmail);
+    final resp = await _authRepository.logout();
     resp.fold((l) {
       emit(UserDetailsState.fail(l.message.body));
     }, (r) {
