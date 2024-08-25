@@ -13,6 +13,7 @@ Este es un proyecto para un proceso de reclutamiento para el rol de Flutter Dev.
   - [Instalación](#instalación)
   - [Arquitectura del Proyecto](#arquitectura-del-proyecto)
   - [Manejadores de Estado](#manejadores-de-estado)
+  - [Servicios](#servicios)
   - [Gestión de la Base de Datos](#gestión-de-la-base-de-datos)
   - [Versiones y Control de Versiones](#versiones-y-control-de-versiones)
   - [Configuración y Dependencias](#configuración-y-dependencias)
@@ -38,7 +39,7 @@ flutter pub get
 Para este proyecto fue utilizada una versión reducida de Clean Architecture orientada a features.
 La idea es desaclopar la lógica de la app y lograr una organización del código, cada feature esta separado por Layers(Capas) cada una tiene una responsabilidad única, y la dependencia entre capas se gestión con inyección de dependencias, de esta forma cada capa depende de Interfaces y no de clases específicas garantizando el desacoplamiento. Cada capa también fue dividida en secciones según su función en la capa.
 
-- **Carpetas principales**:
+- **Ejemplo**:
   - **Carpetas principales**:
   - `/lib`: Código fuente de la aplicación.
   - `/lib/common`:
@@ -48,9 +49,7 @@ La idea es desaclopar la lógica de la app y lograr una organización del códig
       - `/lib/common/domain/dependencies_container`: Contenedores de dependencias.
       - `/lib/common/domain/error_handler`: Manejo de errores.
       - `/lib/common/domain/validators.dart`: Validadores de datos.
-    - `/lib/common/infraestructura`: Servicios.
-      - `/lib/common/infraestructura/local_storage_service`: Servicio de manejo de datos en la BD local.
-      - `/lib/common/infraestructura/image_picker_service`: Servicio para el consumo de la cámara y la galleria de fotos del dispositivo.
+    - `/lib/common/infraestructura/services`: Servicios.
     - `/lib/common/presentation`: Widgets y elementos compartidos.
   - `/lib/features/auth`: Funcionalidad de autenticación.
     - `/lib/features/auth/application`: Bloc y lógica de negocio para autenticación.
@@ -79,6 +78,20 @@ Para controlar los estados y cambios en las vistas, y también separar las respo
 
 - **Gestor de estado principal**: `bloc: ^8.1.0`, `flutter_bloc: ^8.1.6`.
 - **Cómo se implementa**: La implementación de cada Bloc se realiza en la capa de Application de cada feature, consta de tres archivos principales que contienen la lógica para el Bloc, los States, y los Events. Cada Bloc tiene la implementación de la lógica de negocio asociada a su vista. Entonces son consumidos desde la vista correspondiente la cual va a reaccionar segun los estados lanzados por los eventos del Bloc. De esta manera se garantiza la separación de responsabilidades.
+
+- **Ejemplos**
+  - AppBloc: Bloc para manejar el estado de la app. Utilizado para gestionar las sesiones y comportamientos generales de la app.
+  - AuthBloc: Bloc para manejar el estado de la autenticacion de la app.
+
+## Servicios
+
+Pensando en la reutilización de código fueron separados en servicios lógica especifica utilizada en la app. Estos servicios tienen una responsabilidad unica que puede ser usada para obtener datos de terceros, ya sea del una BD local o de la autenticación biométrica del dispositivo.
+
+- **LocalStorageService**: Servicio para manejar la BD local de la app utilizando Hive. Este servicio es utilizado por los Datasources de la app.
+- **ContactService**: Servicio para acceder a los contactos del dispositivo asi como a las acciones principales sobre estos.
+- **ImagePickerService**: Servicio para acceder a tanto a la cámara como a la galeria de imagenes del dispositivo.
+- **SecurityService**: Servicio que permite encriptar y viceversa passwords. También permite chequear si un password encriptado es igual al introducido por el User.
+- **BiometricService**: Servicio que accede a la autenticación local del dispositivo.
 
 ## Gestión de la Base de Datos
 
