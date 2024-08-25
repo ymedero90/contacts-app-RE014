@@ -26,14 +26,16 @@ class AppBloc extends Bloc<AppEvent, AppState> {
   final IUserRepository _userRepository;
 
   late Timer timer;
+  int timerGeneralMin = 2;
   late Timer timerSecondary;
+  int timerSecondarySeconds = 10;
 
   Future<void> _onInitialRequested(
     AppInitialEvent event,
     Emitter<AppState> emit,
   ) async {
     emit(const AppState.initial());
-    timer = Timer.periodic(const Duration(minutes: 2), (timer) {
+    timer = Timer.periodic(Duration(minutes: timerGeneralMin), (timer) {
       add(AppSessionExpired());
       timer.cancel();
     });
@@ -44,7 +46,7 @@ class AppBloc extends Bloc<AppEvent, AppState> {
     Emitter<AppState> emit,
   ) async {
     emit(const AppState.sessionExpired());
-    timerSecondary = Timer.periodic(const Duration(seconds: 10), (timer) async {
+    timerSecondary = Timer.periodic(Duration(seconds: timerSecondarySeconds), (timer) async {
       add(AppSessionRenew(renew: false));
       timer.cancel();
     });
@@ -57,7 +59,7 @@ class AppBloc extends Bloc<AppEvent, AppState> {
     if (event.renew) {
       emit(const AppState.initial());
       timerSecondary.cancel();
-      timer = Timer.periodic(const Duration(minutes: 2), (timer) {
+      timer = Timer.periodic(Duration(minutes: timerGeneralMin), (timer) {
         add(AppSessionExpired());
         timer.cancel();
       });

@@ -67,14 +67,15 @@ class _UserDetailsPageState extends State<UserDetailsPage> {
                 children: [
                   Column(
                     children: [
-                      UserDetailsHeaderWidget(
-                        user: state.user!,
-                        onLogout: () {
-                          context.read<UserDetailsBloc>().add(
-                                OnLogoutEvent(userEmail: state.user!.email),
-                              );
-                        },
-                      ),
+                      if (state.user != null)
+                        UserDetailsHeaderWidget(
+                          user: state.user!,
+                          onLogout: () {
+                            context.read<UserDetailsBloc>().add(
+                                  OnLogoutEvent(userEmail: state.user!.email),
+                                );
+                          },
+                        ),
                       SizedBox(height: size.height * .04),
                       AvatarWidget(
                           avatarPath: state.user?.avatar,
@@ -85,7 +86,7 @@ class _UserDetailsPageState extends State<UserDetailsPage> {
                           }),
                       SizedBox(height: size.height * .04),
                       Text(
-                        state.user!.name,
+                        state.user?.name ?? '',
                         style: const TextStyle(
                           fontSize: 28,
                           fontWeight: FontWeight.bold,
@@ -93,7 +94,7 @@ class _UserDetailsPageState extends State<UserDetailsPage> {
                         ),
                       ),
                       Text(
-                        state.user!.email,
+                        state.user?.email ?? '',
                         style: const TextStyle(
                           fontSize: 18,
                           fontWeight: FontWeight.bold,
